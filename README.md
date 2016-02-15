@@ -1,6 +1,6 @@
 # Software Architecture
-Тема проекта: научный журнал
+Тема проекта: Редакция научного журнала
 
 * [Роли](https://github.com/h31/SoftwareArchitecture/blob/master/Roles.md)
-* [Диаграмма прецедентов](https://raw.githubusercontent.com/h31/SoftwareArchitecture/master/UseCase.svg)
+* [Диаграмма прецедентов](https://github.com/h31/SoftwareArchitecture/blob/master/UseCase.svg)
 * [Варианты использования](https://github.com/h31/SoftwareArchitecture/blob/master/UseCase.md)
