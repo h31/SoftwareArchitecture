@@ -11,9 +11,9 @@ public class Submission {
     private Paper paper;
     private Date date;
 
-    public Submission(Date date, State state, Paper paper) {
+    public Submission(Date date, Paper paper) {
         this.date = date;
-        this.state = state;
+        this.state = State.PENDING;
         this.paper = paper;
     }
 

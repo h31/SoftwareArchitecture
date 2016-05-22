@@ -1,5 +1,6 @@
 package objects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ public class Journal {
     private String formatRules;
     private boolean formattedByEditors;
 
-    private List<Submission> submissions;
+    private List<Submission> submissions = new ArrayList<>();
 
     public Journal(String name, String formatRules, boolean formattedByEditors) {
         this.name = name;

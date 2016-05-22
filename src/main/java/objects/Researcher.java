@@ -19,7 +19,7 @@ public class Researcher {
         this.university = university;
     }
 
-    public Researcher(String university, String name) {
+    public Researcher(String name, String university) {
         this.university = university;
         this.name = name;
     }
