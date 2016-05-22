@@ -10,5 +10,9 @@ import java.util.Optional;
  * Created by Artyom on 16.05.2016.
  */
 public interface JournalStorage extends Storage<Journal> {
-    Optional<Journal> getFormattedByEditors();
+    default Optional<Journal> getFormattedByEditors() {
+        return getList().stream()
+                .filter(p -> !p.isFormattedByEditors())
+                .findFirst();
+    }
 }

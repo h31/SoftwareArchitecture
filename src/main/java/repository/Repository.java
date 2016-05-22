@@ -1,21 +1,19 @@
 package repository;
 
-import mappers.ResearcherMapper;
-import objects.Journal;
-import objects.Paper;
-import objects.Researcher;
-import storage.JournalStorage;
-import storage.ResearcherStorage;
-
-import java.util.*;
+import storage.*;
+import storage.java.ReviewerJavaStorage;
+import storage.java.EditorialRemarkJavaStorage;
+import storage.mappers.PaperMapper;
+import storage.mappers.ResearcherMapper;
+import storage.java.JournalJavaStorage;
+import storage.mappers.SubmissionMapper;
 
 public class Repository {
     // Singleton
 
     private static Repository instance = null;
 
-    private Repository() {
-    }
+    private Repository() {}
 
     public static Repository getInstance() {
         if (instance == null) {
@@ -23,6 +21,8 @@ public class Repository {
             instance.papers.recreate();
             instance.researchers.recreate();
             instance.journals.recreate();
+            instance.reviewers.recreate();
+            instance.editorialRemarks.recreate();
         }
         return instance;
     }
@@ -32,11 +32,10 @@ public class Repository {
         return getInstance();
     }
 
-    // Paper
-
-    public Storage<Paper> papers = new JavaStorage<>();
-
-    public ResearcherStorage researchers = new ResearcherMapper();
-
+    public PaperStorage papers = new PaperMapper(this);
+    public ResearcherStorage researchers = new ResearcherMapper(this);
     public JournalStorage journals = new JournalJavaStorage();
+    public SubmissionStorage submissions = new SubmissionMapper(this);
+    public ReviewerStorage reviewers = new ReviewerJavaStorage();
+    public EditorialRemarkStorage editorialRemarks = new EditorialRemarkJavaStorage();
 }

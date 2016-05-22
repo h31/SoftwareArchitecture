@@ -1,7 +1,18 @@
 apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
 
 repositories {
     mavenCentral()
+}
+
+sourceCompatibility = 1.8
+mainClassName = "ru.spbstu.kspt.Main"
+
+idea {
+    module {
+        downloadJavadoc = true
+    }
 }
 
 dependencies {

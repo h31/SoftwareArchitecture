@@ -9,5 +9,9 @@ import java.util.Optional;
  * Created by Artyom on 16.05.2016.
  */
 public interface ResearcherStorage extends Storage<Researcher> {
-    Optional<Researcher> get(String name);
+    default Optional<Researcher> get(String name) {
+        return getList().stream()
+                .filter(p -> p.getName().equals(name))
+                .findFirst();
+    }
 }

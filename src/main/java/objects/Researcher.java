@@ -7,6 +7,11 @@ public class Researcher {
     private String name;
     private String university;
 
+    public Researcher(String name, String university) {
+        this.university = university;
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
@@ -17,10 +22,5 @@ public class Researcher {
 
     public void setUniversity(String university) {
         this.university = university;
-    }
-
-    public Researcher(String name, String university) {
-        this.university = university;
-        this.name = name;
     }
 }

@@ -20,16 +20,6 @@ public class JavaStorage<T> implements Storage<T> {
         recreate();
     }
 
-//    @Override
-//    public Optional<T> get(int id) {
-//        if (data.size() > id) {
-//            return Optional.ofNullable(data.get(id));
-//        } else {
-//            return Optional.empty();
-//        }
-//
-//    }
-
     @Override
     public List<T> getList() {
         return data;
@@ -38,7 +28,6 @@ public class JavaStorage<T> implements Storage<T> {
     @Override
     public void add(T entry) {
         data.add(entry);
-//        return data.size() - 1;
     }
 
     @Override
@@ -47,22 +36,3 @@ public class JavaStorage<T> implements Storage<T> {
     }
 }
 
-// Researcher
-
-class ResearcherJavaStorage extends JavaStorage<Researcher> implements ResearcherStorage {
-    public Optional<Researcher> get(String name) {
-        return getList().stream()
-                .filter(p -> p.getName().equals(name))
-                .findFirst();
-    }
-}
-
-// Journal
-
-class JournalJavaStorage extends JavaStorage<Journal> implements JournalStorage {
-    public Optional<Journal> getFormattedByEditors() {
-        return getList().stream()
-                .filter(p -> !p.isFormattedByEditors())
-                .findFirst();
-    }
-}

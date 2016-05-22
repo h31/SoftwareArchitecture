@@ -21,13 +21,10 @@ public class WritePaperTest {
 
     @Before
     public void init() {
-        repo = Repository.recreate();
-
-        repo.researchers.add(new Researcher("Peter", "MIT"));
-        repo.researchers.add(new Researcher("Mikhail", "SPbSTU"));
-
-        repo.journals.add(new Journal("Nature", "ALL CAPS", false));
-        repo.journals.add(new Journal("Science", "14pt", true));
+        RepositoryInit init = new RepositoryInit();
+        init.addResearchers();
+        init.addJournals();
+        repo = init.getRepo();
     }
 
     @Test
@@ -49,9 +46,5 @@ public class WritePaperTest {
         Date currentDate = new Date();
         Submission submission = new Submission(currentDate, writtenPaper);
         journal.get().addSubmission(submission);
-    }
-
-    @Test
-    public void receivePaper() {
     }
 }
