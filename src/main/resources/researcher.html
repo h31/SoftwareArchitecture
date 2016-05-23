@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Статистика</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+          crossorigin="anonymous"/>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+          crossorigin="anonymous"/>
+</head>
+<body>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+
+<p>Current researcher is: <span th:text="${currentRes}"></span></p>
+
+<form action="/chooseResearcher" method="post">
+    <p><select name="researcher">
+        <!--/*@thymesVar id="repo" type="repository.Repository"*/-->
+        <option th:each="r: ${repo.researchers.getList()}" th:value="${r.getName()}" th:text="${r.getName()}"></option>
+    </select></p>
+    <p><input type="submit" value="Отправить"/></p>
+</form>
+
+<h3>Submissions</h3>
+<ul>
+    <!--/*@thymesVar id="repo" type="repository.Repository"*/-->
+    <li th:each="s: ${repo.submissions.getList()}">
+        <!--/*@thymesVar id="s" type="objects.Submission"*/-->
+        <div>State: <span th:text="${s.getState()}"></span></div>
+        <div>Date: <span th:text="${s.getDate()}"></span></div>
+        <ul>
+            <li th:each="paper: ${s.getPaper()}">
+                <!--/*@thymesVar id="item" type="objects.Paper"*/-->
+                <div>Title: <span th:text="${paper.getTitle()}"></span></div>
+                <div>Abstract: <span th:text="${paper.getAbstractTxt()}"></span></div>
+                <div>Content: <span th:text="${paper.getContent()}"></span></div>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<form action="/addSubmission" method="post">
+    Title: <br />
+    <input type="text" name="title" /><br />
+    Abstract: <br />
+    <input type="text" name="abstract" /><br/>
+    Content: <br />
+    <input type="text" name="content" />
+    <p><input type="submit" value="Отправить"/></p>
+</form>
+
+</body>
+</html>

@@ -19,12 +19,17 @@ public class Submission {
 
     private Date date;
 
-    public Submission(Date date, Paper paper) {
-        this.date = date;
+    public Submission(Paper paper) {
+        this.date = new Date();
         this.state = State.PENDING;
         this.paper = paper;
         reviewerRemark = Optional.empty();
         editorialRemark = Optional.empty();
+    }
+
+    public Submission(Date date, Paper paper) {
+        this(paper);
+        this.date = date;
     }
 
     public Submission(Date date, Paper paper, State state) {
