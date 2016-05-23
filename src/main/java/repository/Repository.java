@@ -23,6 +23,7 @@ public class Repository {
             instance.journals.recreate();
             instance.reviewers.recreate();
             instance.editorialRemarks.recreate();
+            instance.submissions.recreate();
         }
         return instance;
     }

@@ -51,7 +51,7 @@ public class PaperMapper extends Mapper<Paper> implements PaperStorage {
 
     @Override
     protected Query insertQuery(Connection connection, Paper entry) {
-        return connection.createQuery("INSERT INTO papers (TITLE, ABSTACT, CONTENT)" +
+        return connection.createQuery("INSERT INTO papers (TITLE, ABSTRACT, CONTENT)" +
                 " VALUES (:title, :abstract, :content)")
                 .addParameter("title", entry.getTitle())
                 .addParameter("abstract", entry.getAbstractTxt())
@@ -62,9 +62,11 @@ public class PaperMapper extends Mapper<Paper> implements PaperStorage {
     protected void createTableQuery(Connection connection) {
         connection.createQuery("CREATE TABLE IF NOT EXISTS papers (" +
                 "title VARCHAR(100)," +
-                "abstact VARCHAR(100)," +
-                "content CLOB" +
+                "abstract VARCHAR(100)," +
+                "content VARCHAR(100)" +
                 ")").executeUpdate();
+
+        connection.createQuery("DELETE FROM papers").executeUpdate();
 
         connection.createQuery("CREATE TABLE IF NOT EXISTS keywords (" +
                 "paper_title VARCHAR(100)," +

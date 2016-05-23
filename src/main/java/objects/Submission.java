@@ -27,6 +27,11 @@ public class Submission {
         editorialRemark = Optional.empty();
     }
 
+    public Submission(Date date, Paper paper, State state) {
+        this(date, paper);
+        setState(state);
+    }
+
     public enum State {
         PENDING,
         REVIEWER_ENQUEUED,

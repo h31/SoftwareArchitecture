@@ -1,3 +1,5 @@
+package repository;
+
 import objects.*;
 import repository.Repository;
 import services.SubmissionUpdate;
@@ -13,25 +15,25 @@ import java.util.Optional;
 public class RepositoryInit {
     private Repository repo;
 
-    RepositoryInit() {
+    public RepositoryInit() {
         repo = Repository.recreate();
     }
 
-    void addResearchers() {
+    public void addResearchers() {
         repo.researchers.add(new Researcher("Peter", "MIT"));
         repo.researchers.add(new Researcher("Mikhail", "SPbSTU"));
     }
 
-    void addReviewers() {
+    public void addReviewers() {
         repo.reviewers.add(new Reviewer("Rodrigo", "CMU"));
     }
 
-    void addJournals() {
+    public void addJournals() {
         repo.journals.add(new Journal("Nature", "ALL CAPS", false));
         repo.journals.add(new Journal("Science", "14pt", true));
     }
 
-    void addSubmission() {
+    public void addSubmission() {
         Optional<Researcher> r = repo.researchers.get("Peter");
         Paper writtenPaper = new Paper("Code Uglify",
                 Collections.singletonList(r.get()),
@@ -46,7 +48,7 @@ public class RepositoryInit {
         repo.submissions.add(submission);
     }
 
-    void setEnqueuedSubmissions() {
+    public void setEnqueuedSubmissions() {
         List<Submission> submissions = repo.submissions.getList();
         SubmissionUpdate update = new SubmissionUpdate(getRepo());
         for (Submission s: submissions) {
@@ -54,7 +56,7 @@ public class RepositoryInit {
         }
     }
 
-    Repository getRepo() {
+    public Repository getRepo() {
         return repo;
     }
 }

@@ -14,7 +14,7 @@ public class SubmissionUpdate {
     Repository repo;
 
     public SubmissionUpdate(Repository repository) {
-        this.repo = repo;
+        this.repo = repository;
     }
 
     public void editorialUpdate(Submission submission, EditorialRemark remark) {

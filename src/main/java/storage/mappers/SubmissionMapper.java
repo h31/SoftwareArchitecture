@@ -24,11 +24,12 @@ public class SubmissionMapper extends Mapper<Submission> implements SubmissionSt
 
     @Override
     protected Submission makeObject(Connection connection, Map<String, Object> result) {
-        Date date = (Date) result.get("rname");
+        Date date = (Date) result.get("date");
         String paperTitle = (String) result.get("paper_title");
+        String state = (String) result.get("state");
         Optional<Paper> paper = repo.papers.get(paperTitle);
         assert paper.isPresent();
-        return new Submission(date, paper.get());
+        return new Submission(date, paper.get(), Submission.State.valueOf(state));
     }
 
     @Override
@@ -41,7 +42,8 @@ public class SubmissionMapper extends Mapper<Submission> implements SubmissionSt
         return connection.createQuery("INSERT INTO SUBMISSIONS (PAPER_TITLE, STATE, DATE)" +
                 " VALUES (:paper, :state, :date)")
                 .addParameter("paper", entry.getPaper().getTitle())
-                .addParameter("state", entry.getState());
+                .addParameter("state", entry.getState())
+                .addParameter("date", entry.getDate());
     }
 
     @Override
@@ -51,6 +53,8 @@ public class SubmissionMapper extends Mapper<Submission> implements SubmissionSt
                 "state VARCHAR(20)," +
                 "date TIMESTAMP" +
                 ")").executeUpdate();
+
+        connection.createQuery("DELETE FROM SUBMISSIONS").executeUpdate();
     }
 
     @Override
