@@ -23,20 +23,10 @@
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
         crossorigin="anonymous"></script>
 
-<p>Current researcher is: <span th:text="${currentRes}"></span></p>
-
-<form action="/chooseResearcher" method="post">
-    <p><select name="researcher">
-        <!--/*@thymesVar id="repo" type="repository.Repository"*/-->
-        <option th:each="r: ${repo.researchers.getList()}" th:value="${r.getName()}" th:text="${r.getName()}"></option>
-    </select></p>
-    <p><input type="submit" value="Отправить"/></p>
-</form>
-
 <h3>Submissions</h3>
 <ul>
     <!--/*@thymesVar id="repo" type="repository.Repository"*/-->
-    <li th:each="s: ${repo.submissions.getList()}">
+    <li th:each="s: ${repo.submissionUpdate.getPending()}">
         <!--/*@thymesVar id="s" type="objects.Submission"*/-->
         <div>State: <span th:text="${s.getState()}"></span></div>
         <div>Date: <span th:text="${s.getDate()}"></span></div>
@@ -48,20 +38,13 @@
                 <div>Content: <span th:text="${paper.getContent()}"></span></div>
             </li>
         </ul>
+        <form action="/editorDecision" method="post">
+            <input type="submit" name="accepted" value="Accept" />
+            <input type="submit" name="rework" value="Suggest rework" />
+            <input type="submit" name="redirect" value="Redirect to another journal" />
+        </form>
     </li>
 </ul>
-
-<h3>Submit Paper</h3>
-
-<form action="/addSubmission" method="post">
-    Title: <br />
-    <input type="text" name="title" /><br />
-    Abstract: <br />
-    <input type="text" name="abstract" /><br/>
-    Content: <br />
-    <input type="text" name="content" />
-    <p><input type="submit" value="Отправить"/></p>
-</form>
 
 </body>
 </html>

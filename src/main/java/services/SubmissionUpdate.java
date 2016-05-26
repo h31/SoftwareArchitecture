@@ -17,6 +17,10 @@ public class SubmissionUpdate {
         this.repo = repository;
     }
 
+    public List<Submission> getPending() {
+        return repo.submissions.get(Submission.State.PENDING);
+    }
+
     public void editorialUpdate(Submission submission, EditorialRemark remark) {
         if (submission.getState() != Submission.State.PENDING) {
             throw new IllegalArgumentException();

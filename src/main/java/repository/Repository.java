@@ -1,5 +1,6 @@
 package repository;
 
+import services.SubmissionUpdate;
 import storage.*;
 import storage.java.ReviewerJavaStorage;
 import storage.java.EditorialRemarkJavaStorage;
@@ -39,4 +40,6 @@ public class Repository {
     public SubmissionStorage submissions = new SubmissionMapper(this);
     public ReviewerStorage reviewers = new ReviewerJavaStorage();
     public EditorialRemarkStorage editorialRemarks = new EditorialRemarkJavaStorage();
+
+    public SubmissionUpdate submissionUpdate = new SubmissionUpdate(this);
 }

@@ -42,6 +42,12 @@ public class WebUI {
             return new ModelAndView(attributes, "researcher.html");
         }, new ThymeleafTemplateEngine(new ClassLoaderTemplateResolver()));
 
+        get("/editor", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("repo", repo);
+            return new ModelAndView(attributes, "editor.html");
+        }, new ThymeleafTemplateEngine(new ClassLoaderTemplateResolver()));
+
         post("/chooseResearcher", (request, response) -> {
             String r = request.queryParams("researcher");
             response.cookie("researcher", r);
@@ -72,11 +78,11 @@ public class WebUI {
             return "";
         });
 
-        post("/papers", (request, response) -> {
-            response.header("Access-Control-Allow-Origin", "http://localhost:4200");
-            System.out.println(request.body());
-            System.out.println(request.queryParams());
-            return "[]";
+        post("/editorDecision", (request, response) -> {
+            System.out.println(response.body());
+            return "";
         });
+
+        get("/papers", (request, response) -> repo.papers.getList(), new JsonTransformer());
     }
 }
