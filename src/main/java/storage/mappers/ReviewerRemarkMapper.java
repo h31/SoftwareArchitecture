@@ -53,7 +53,7 @@ public class ReviewerRemarkMapper extends Mapper<ReviewerRemark> implements Revi
                 "mark VARCHAR(20)," +
                 "text VARCHAR(100)," +
                 "reviewer_id UUID," +
-                "FOREIGN KEY (reviewer_id) REFERENCES reviewers(id)" +
+                "FOREIGN KEY (reviewer_id) REFERENCES reviewers(id) ON DELETE CASCADE" +
                 ")").executeUpdate();
     }
 

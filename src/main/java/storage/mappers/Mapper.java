@@ -54,6 +54,7 @@ abstract public class Mapper<T> implements Storage<T> {
     public void recreate() {
         try(Connection con = sql2o.open()) {
             createTableQuery(con);
+            deleteAllData(con).executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

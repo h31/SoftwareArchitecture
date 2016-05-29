@@ -21,8 +21,9 @@ public class PaperMapper extends Mapper<Paper> implements PaperStorage {
     @Override
     protected Paper makeObject(Connection connection, Map<String, Object> result) {
         String title = (String) result.get("title");
-        List<String> rnames = connection.createQuery("SELECT RNAME FROM PAPERS_AUTHORS WHERE PAPER_TITLE = :title")
-                .addParameter("title", title).executeScalarList(String.class);
+        UUID id = (UUID) result.get("id");
+        List<String> rnames = connection.createQuery("SELECT RNAME FROM PAPERS_AUTHORS WHERE paper_id = :id")
+                .addParameter("id", id).executeScalarList(String.class);
 
         List<Researcher> authors = new ArrayList<>();
         for (String rname: rnames) {
@@ -37,7 +38,6 @@ public class PaperMapper extends Mapper<Paper> implements PaperStorage {
 
         String abstractTxt = (String) result.get("abstract");
         String content = (String) result.get("content");
-        UUID id = (UUID) result.get("id");
 
         return new Paper(title, authors, keywords, abstractTxt, content, id);
     }
@@ -50,11 +50,13 @@ public class PaperMapper extends Mapper<Paper> implements PaperStorage {
     @Override
     protected Query insertQuery(Connection connection, Paper entry) {
         return connection.createQuery("INSERT INTO papers (ID, TITLE, ABSTRACT, CONTENT)" +
-                " VALUES (:id, :title, :abstract, :content)")
+                " VALUES (:id, :title, :abstract, :content);" +
+                " INSERT INTO papers_authors (paper_id, rname) VALUES (:id, :rname)")
                 .addParameter("id", entry.getId())
                 .addParameter("title", entry.getTitle())
                 .addParameter("abstract", entry.getAbstractTxt())
-                .addParameter("content", entry.getContent());
+                .addParameter("content", entry.getContent())
+                .addParameter("rname", entry.getAuthors().get(0).getName());
     }
 
     @Override
@@ -72,7 +74,7 @@ public class PaperMapper extends Mapper<Paper> implements PaperStorage {
                 ")").executeUpdate();
 
         connection.createQuery("CREATE TABLE IF NOT EXISTS papers_authors (" +
-                "paper_title VARCHAR(100)," +
+                "paper_id UUID," +
                 "rname VARCHAR(100)" +
                 ")").executeUpdate();
     }

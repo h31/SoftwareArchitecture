@@ -63,9 +63,9 @@ public class SubmissionMapper extends Mapper<Submission> implements SubmissionSt
                 "editorial_remark_id UUID," +
                 "reviewer_remark_id UUID," +
                 "PRIMARY KEY (paper_uuid, date)," +
-                "FOREIGN KEY (paper_uuid) REFERENCES papers(id)," +
-                "FOREIGN KEY (editorial_remark_id) REFERENCES editorial_remark(id)," +
-                "FOREIGN KEY (reviewer_remark_id) REFERENCES reviewer_remark(id)" +
+                "FOREIGN KEY (paper_uuid) REFERENCES papers(id) ON DELETE CASCADE," +
+                "FOREIGN KEY (editorial_remark_id) REFERENCES editorial_remark(id) ON DELETE CASCADE," +
+                "FOREIGN KEY (reviewer_remark_id) REFERENCES reviewer_remark(id) ON DELETE CASCADE" +
                 ")").executeUpdate();
 
         connection.createQuery("DELETE FROM SUBMISSIONS").executeUpdate();
