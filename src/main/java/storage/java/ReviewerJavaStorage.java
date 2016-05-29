@@ -1,7 +1,6 @@
 package storage.java;
 
 import objects.Reviewer;
-import repository.JavaStorage;
 import storage.ReviewerStorage;
 
 /**

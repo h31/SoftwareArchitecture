@@ -1,9 +1,6 @@
 package storage.java;
 
-import objects.EditorialRemark;
 import objects.ReviewerRemark;
-import repository.JavaStorage;
-import storage.EditorialRemarkStorage;
 import storage.ReviewerRemarkStorage;
 
 /**

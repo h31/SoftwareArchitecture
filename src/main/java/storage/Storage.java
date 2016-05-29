@@ -1,4 +1,4 @@
-package repository;
+package storage;
 
 import java.util.List;
 import java.util.Optional;

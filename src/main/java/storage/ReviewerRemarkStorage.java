@@ -1,9 +1,6 @@
 package storage;
 
-import objects.EditorialRemark;
-import objects.Reviewer;
 import objects.ReviewerRemark;
-import repository.Storage;
 
 import java.util.Optional;
 import java.util.UUID;

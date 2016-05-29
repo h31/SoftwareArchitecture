@@ -1,13 +1,9 @@
-package repository;
+package storage.java;
 
-import objects.Journal;
-import objects.Researcher;
-import storage.JournalStorage;
-import storage.ResearcherStorage;
+import storage.Storage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Artyom on 11.04.2016.

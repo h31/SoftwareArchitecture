@@ -1,9 +1,6 @@
 package storage;
 
-import objects.Journal;
-import objects.Paper;
 import objects.Submission;
-import repository.Storage;
 
 import java.util.List;
 import java.util.Optional;

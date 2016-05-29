@@ -4,7 +4,7 @@ import org.sql2o.Connection;
 import org.sql2o.Query;
 import org.sql2o.Sql2o;
 import repository.Repository;
-import repository.Storage;
+import storage.Storage;
 
 import java.util.List;
 import java.util.Map;

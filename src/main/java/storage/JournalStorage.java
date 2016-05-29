@@ -1,8 +1,6 @@
 package storage;
 
 import objects.Journal;
-import objects.Researcher;
-import repository.Storage;
 
 import java.util.Optional;
 
