@@ -14,7 +14,11 @@ import java.util.stream.Collectors;
  * Created by artyom on 22.05.16.
  */
 abstract public class Mapper<T> implements Storage<T> {
-    protected Sql2o sql2o = new Sql2o("jdbc:hsqldb:file:db/testdb", "sa", "");
+    private final String dbPath = "jdbc:postgresql://localhost:5432/journal";
+    private final String user = "journal";
+    private final String password = "qwerty";
+
+    protected Sql2o sql2o = new Sql2o(dbPath, user, password);
     protected Repository repo;
 
     public Mapper(Repository repo) {
@@ -29,6 +33,9 @@ abstract public class Mapper<T> implements Storage<T> {
                     .asList().stream()
                     .map(it -> makeObject(con, it))
                     .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -37,6 +44,9 @@ abstract public class Mapper<T> implements Storage<T> {
         try(Connection con = sql2o.open()) {
             insertQuery(con, entry)
                     .executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -44,6 +54,9 @@ abstract public class Mapper<T> implements Storage<T> {
     public void recreate() {
         try(Connection con = sql2o.open()) {
             createTableQuery(con);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -51,4 +64,5 @@ abstract public class Mapper<T> implements Storage<T> {
     abstract protected Query selectQuery(Connection connection);
     abstract protected Query insertQuery(Connection connection, T entry);
     abstract protected void createTableQuery(Connection connection);
+    abstract protected Query deleteAllData(Connection connection);
 }

@@ -7,6 +7,7 @@ import repository.Storage;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -18,5 +19,9 @@ public interface SubmissionStorage extends Storage<Submission> {
         return getList().stream()
                 .filter(p -> p.getState().equals(state))
                 .collect(Collectors.toList());
+    }
+
+    default Optional<Submission> get(UUID uuid) {
+        return getList().stream().filter(p -> p.getPaper().getId().equals(uuid)).findFirst();
     }
 }

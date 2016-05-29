@@ -4,35 +4,32 @@ package ui;
  * Created by artyom on 23.05.16.
  */
 
-import objects.Paper;
-import objects.Researcher;
-import objects.Submission;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import objects.*;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import repository.Repository;
+
 import repository.RepositoryInit;
-
-import static spark.Spark.get;
-import static spark.Spark.post;
-
+import services.SimilarPapers;
 import spark.ModelAndView;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
+
+import static spark.Spark.*;
 
 public class WebUI {
     public static void main(String[] args) {
-//        String projectDir = System.getProperty("user.dir");
-//        staticFiles.externalLocation(projectDir + "/tmp/journal/dist");
+        staticFiles.location("/"); // Static files
 
         RepositoryInit init = new RepositoryInit();
         init.addResearchers();
         init.addJournals();
         init.addSubmission();
-        Repository repo = init.getRepo();
+        init.addReviewers();
+        Repository repo = Repository.getInstance();  // init.getRepo();
 
         get("/researcher", (request1, response1) -> {
             Map<String, Object> attributes = new HashMap<>();
@@ -79,10 +76,96 @@ public class WebUI {
         });
 
         post("/editorDecision", (request, response) -> {
-            System.out.println(response.body());
+            Set<String> params = request.queryParams();
+            String uuidString = request.queryParams("uuid");
+            UUID uuid = UUID.fromString(uuidString);
+            Optional<Submission> submission = repo.submissions.get(uuid);
+            if (!submission.isPresent()) {
+                halt(500, "No such submission");
+            }
+            String remarkText = request.queryParams("remark");
+            EditorialRemark.Decision decision;
+            if (params.contains("accepted")) {
+                decision = EditorialRemark.Decision.ACCEPT;
+            } else if (params.contains("rework")) {
+                decision = EditorialRemark.Decision.NEEDS_REWORK;
+            } else if (params.contains("redirect")) {
+                decision = EditorialRemark.Decision.REDIRECT;
+            } else {
+                halt(500, "Invalid decision");
+                return "";
+            }
+            EditorialRemark remark = new EditorialRemark(decision, remarkText, UUID.randomUUID());
+            repo.submissionUpdate.editorialUpdate(submission.get(), remark);
+
+            response.redirect("/editor");
             return "";
         });
 
-        get("/papers", (request, response) -> repo.papers.getList(), new JsonTransformer());
+        get("/reviewer", (request1, response1) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("repo", repo);
+            String r = request1.cookie("reviewer");
+            attributes.put("currentUser", r != null ? r : "Not selected");
+            return new ModelAndView(attributes, "reviewer.html");
+        }, new ThymeleafTemplateEngine(new ClassLoaderTemplateResolver()));
+
+        post("/chooseReviewer", (request, response) -> {
+            String r = request.queryParams("user");
+            response.cookie("reviewer", r);
+            response.redirect("/reviewer");
+            return "";
+        });
+
+        post("/reviewerDecision", (request, response) -> {
+            Set<String> params = request.queryParams();
+            String uuidString = request.queryParams("uuid");
+            UUID uuid = UUID.fromString(uuidString);
+            Optional<Submission> submission = repo.submissions.get(uuid);
+            if (!submission.isPresent()) {
+                halt(500, "No such submission");
+            }
+            String remarkText = request.queryParams("remark");
+            ReviewerRemark.Mark mark;
+            if (params.contains("accept")) {
+                mark = ReviewerRemark.Mark.ACCEPT;
+            } else if (params.contains("neutral")) {
+                mark = ReviewerRemark.Mark.NEUTRAL;
+            } else if (params.contains("reject")) {
+                mark = ReviewerRemark.Mark.REJECT;
+            } else {
+                halt(HttpServletResponse.SC_BAD_REQUEST, "Invalid decision");
+                return "";
+            }
+            String user = request.cookie("reviewer");
+            if (user == null) {
+                halt(HttpServletResponse.SC_BAD_REQUEST, "Please choose reviewer first");
+            }
+            Optional<Reviewer> reviewer = repo.reviewers.get(user);
+            if (!reviewer.isPresent()) {
+                halt(HttpServletResponse.SC_BAD_REQUEST, "Unknown reviewer");
+            }
+            ReviewerRemark remark = new ReviewerRemark(reviewer.get(), mark, remarkText, UUID.randomUUID());
+            repo.submissionUpdate.reviewerUpdate(submission.get(), remark);
+
+            response.redirect("/reviewer");
+            return "";
+        });
+
+        get("/paperFetch", (request, response) -> {
+            response.type("application/json");
+            return repo.submissionUpdate.getInPool();
+        }, new JacksonTransformer(new ObjectMapper()));
+
+        get("/paperFetchXML", (request, response) -> {
+            response.type("application/xml");
+            return repo.submissionUpdate.getInPool();
+        }, new JacksonTransformer(new XmlMapper()));
+
+        get("/similar", (request1, response1) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("repo", repo);
+            return new ModelAndView(attributes, "similar.html");
+        }, new ThymeleafTemplateEngine(new ClassLoaderTemplateResolver()));
     }
 }

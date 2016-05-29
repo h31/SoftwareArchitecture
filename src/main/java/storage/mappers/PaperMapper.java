@@ -7,10 +7,7 @@ import org.sql2o.Query;
 import repository.Repository;
 import storage.PaperStorage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -40,8 +37,9 @@ public class PaperMapper extends Mapper<Paper> implements PaperStorage {
 
         String abstractTxt = (String) result.get("abstract");
         String content = (String) result.get("content");
+        UUID id = (UUID) result.get("id");
 
-        return new Paper(title, authors, keywords, abstractTxt, content);
+        return new Paper(title, authors, keywords, abstractTxt, content, id);
     }
 
     @Override
@@ -51,8 +49,9 @@ public class PaperMapper extends Mapper<Paper> implements PaperStorage {
 
     @Override
     protected Query insertQuery(Connection connection, Paper entry) {
-        return connection.createQuery("INSERT INTO papers (TITLE, ABSTRACT, CONTENT)" +
-                " VALUES (:title, :abstract, :content)")
+        return connection.createQuery("INSERT INTO papers (ID, TITLE, ABSTRACT, CONTENT)" +
+                " VALUES (:id, :title, :abstract, :content)")
+                .addParameter("id", entry.getId())
                 .addParameter("title", entry.getTitle())
                 .addParameter("abstract", entry.getAbstractTxt())
                 .addParameter("content", entry.getContent());
@@ -61,12 +60,11 @@ public class PaperMapper extends Mapper<Paper> implements PaperStorage {
     @Override
     protected void createTableQuery(Connection connection) {
         connection.createQuery("CREATE TABLE IF NOT EXISTS papers (" +
+                "id UUID PRIMARY KEY ," +
                 "title VARCHAR(100)," +
                 "abstract VARCHAR(100)," +
                 "content VARCHAR(100)" +
                 ")").executeUpdate();
-
-        connection.createQuery("DELETE FROM papers").executeUpdate();
 
         connection.createQuery("CREATE TABLE IF NOT EXISTS keywords (" +
                 "paper_title VARCHAR(100)," +
@@ -80,10 +78,15 @@ public class PaperMapper extends Mapper<Paper> implements PaperStorage {
     }
 
     @Override
-    public Optional<Paper> get(String title) {
+    protected Query deleteAllData(Connection connection) {
+        return connection.createQuery("DELETE FROM PAPERS; DELETE FROM KEYWORDS; DELETE FROM PAPERS_AUTHORS");
+    }
+
+    @Override
+    public Optional<Paper> get(UUID uuid) {
         try(Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM PAPERS WHERE TITLE = :title")
-                    .addParameter("title", title)
+            return con.createQuery("SELECT * FROM PAPERS WHERE id = :id")
+                    .addParameter("id", uuid)
                     .executeAndFetchTable()
                     .asList().stream()
                     .map(it -> makeObject(con, it))

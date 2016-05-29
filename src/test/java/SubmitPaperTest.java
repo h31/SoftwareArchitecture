@@ -7,6 +7,7 @@ import repository.RepositoryInit;
 import services.SubmissionUpdate;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -34,7 +35,7 @@ public class SubmitPaperTest {
         assertTrue(pending.size() > 0);
         Submission submission = pending.get(0);
 
-        EditorialRemark remark = new EditorialRemark(EditorialRemark.Decision.ACCEPT, "Good");
+        EditorialRemark remark = new EditorialRemark(EditorialRemark.Decision.ACCEPT, "Good", UUID.randomUUID());
         new SubmissionUpdate(repo).editorialUpdate(submission, remark);
 
         assertTrue(repo.submissions.get(Submission.State.REVIEWER_ENQUEUED).size() > 0);
@@ -48,7 +49,7 @@ public class SubmitPaperTest {
         assertTrue(pending.size() > 0);
         Submission submission = pending.get(0);
 
-        EditorialRemark remark = new EditorialRemark(EditorialRemark.Decision.NEEDS_REWORK, "Bad");
+        EditorialRemark remark = new EditorialRemark(EditorialRemark.Decision.NEEDS_REWORK, "Bad", UUID.randomUUID());
         new SubmissionUpdate(repo).editorialUpdate(submission, remark);
 
         assertTrue(repo.submissions.get(Submission.State.REJECTED).size() > 0);

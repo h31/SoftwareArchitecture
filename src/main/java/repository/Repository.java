@@ -1,13 +1,13 @@
 package repository;
 
+import objects.ReviewerRemark;
+import services.SimilarPapers;
 import services.SubmissionUpdate;
 import storage.*;
 import storage.java.ReviewerJavaStorage;
 import storage.java.EditorialRemarkJavaStorage;
-import storage.mappers.PaperMapper;
-import storage.mappers.ResearcherMapper;
+import storage.mappers.*;
 import storage.java.JournalJavaStorage;
-import storage.mappers.SubmissionMapper;
 
 public class Repository {
     // Singleton
@@ -19,18 +19,20 @@ public class Repository {
     public static Repository getInstance() {
         if (instance == null) {
             instance = new Repository();
-            instance.papers.recreate();
-            instance.researchers.recreate();
-            instance.journals.recreate();
-            instance.reviewers.recreate();
-            instance.editorialRemarks.recreate();
-            instance.submissions.recreate();
         }
         return instance;
     }
 
     public static Repository recreate() {
-        instance = null;
+        instance = new Repository();
+        instance.papers.recreate();
+        instance.researchers.recreate();
+        instance.journals.recreate();
+        instance.reviewers.recreate();
+        instance.editorialRemarks.recreate();
+        instance.reviewerRemarks.recreate();
+        instance.submissions.recreate();
+
         return getInstance();
     }
 
@@ -38,8 +40,10 @@ public class Repository {
     public ResearcherStorage researchers = new ResearcherMapper(this);
     public JournalStorage journals = new JournalJavaStorage();
     public SubmissionStorage submissions = new SubmissionMapper(this);
-    public ReviewerStorage reviewers = new ReviewerJavaStorage();
-    public EditorialRemarkStorage editorialRemarks = new EditorialRemarkJavaStorage();
+    public ReviewerStorage reviewers = new ReviewerMapper(this);
+    public EditorialRemarkStorage editorialRemarks = new EditorialRemarkMapper(this);
+    public ReviewerRemarkStorage reviewerRemarks = new ReviewerRemarkMapper(this);
 
     public SubmissionUpdate submissionUpdate = new SubmissionUpdate(this);
+    public SimilarPapers similarPapers = new SimilarPapers();
 }

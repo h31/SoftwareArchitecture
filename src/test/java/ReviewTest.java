@@ -8,6 +8,7 @@ import repository.RepositoryInit;
 import services.SubmissionUpdate;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertTrue;
 
@@ -39,7 +40,7 @@ public class ReviewTest {
         assertTrue(repo.reviewers.getList().size() > 0);
         Reviewer reviewer = repo.reviewers.getList().get(0);
 
-        ReviewerRemark remark = new ReviewerRemark(reviewer, ReviewerRemark.Mark.ACCEPT, "Good");
+        ReviewerRemark remark = new ReviewerRemark(reviewer, ReviewerRemark.Mark.ACCEPT, "Good", UUID.randomUUID());
         new SubmissionUpdate(repo).reviewerUpdate(submission, remark);
 
         assertTrue(repo.submissions.get(Submission.State.IN_POOL).size() > 0);
@@ -56,7 +57,7 @@ public class ReviewTest {
         assertTrue(repo.reviewers.getList().size() > 0);
         Reviewer reviewer = repo.reviewers.getList().get(0);
 
-        ReviewerRemark remark = new ReviewerRemark(reviewer, ReviewerRemark.Mark.REJECT, "Good");
+        ReviewerRemark remark = new ReviewerRemark(reviewer, ReviewerRemark.Mark.REJECT, "Good", UUID.randomUUID());
         new SubmissionUpdate(repo).reviewerUpdate(submission, remark);
 
         assertTrue(repo.submissions.get(Submission.State.REJECTED).size() > 0);

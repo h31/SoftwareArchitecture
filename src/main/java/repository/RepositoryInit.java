@@ -4,10 +4,7 @@ import objects.*;
 import repository.Repository;
 import services.SubmissionUpdate;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by artyom on 22.05.16.
@@ -25,7 +22,7 @@ public class RepositoryInit {
     }
 
     public void addReviewers() {
-        repo.reviewers.add(new Reviewer("Rodrigo", "CMU"));
+        repo.reviewers.add(new Reviewer("Rodrigo", "CMU", UUID.randomUUID()));
     }
 
     public void addJournals() {
@@ -52,7 +49,7 @@ public class RepositoryInit {
         List<Submission> submissions = repo.submissions.getList();
         SubmissionUpdate update = new SubmissionUpdate(getRepo());
         for (Submission s: submissions) {
-            update.editorialUpdate(s, new EditorialRemark(EditorialRemark.Decision.ACCEPT, ""));
+            update.editorialUpdate(s, new EditorialRemark(EditorialRemark.Decision.ACCEPT, "", UUID.randomUUID()));
         }
     }
 

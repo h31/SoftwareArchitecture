@@ -48,6 +48,14 @@
                 <div>Content: <span th:text="${paper.getContent()}"></span></div>
             </li>
         </ul>
+        <div th:if="${s.getEditorialRemark().isPresent()}">
+            Review remark: <span style="font-weight: bold" th:text="${s.getEditorialRemark().get().getDecision()}"></span>
+            Note: <span th:text="${s.getEditorialRemark().get().getRemark()}"></span>
+        </div>
+        <div th:if="${s.getReviewerRemark().isPresent()}">
+            Review remark: <span style="font-weight: bold" th:text="${s.getReviewerRemark().get().getMark()}"></span>
+            Note: <span th:text="${s.getReviewerRemark().get().getText()}"></span>
+        </div>
     </li>
 </ul>
 

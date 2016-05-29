@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Researcher</title>
+    <title>Reviewer</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -23,10 +23,24 @@
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
         crossorigin="anonymous"></script>
 
+<p>Current reviewer is: <span th:text="${currentUser}"></span></p>
+
+<form action="/chooseReviewer" method="post">
+    <p>
+        <select name="user">
+            <!--/*@thymesVar id="repo" type="repository.Repository"*/-->
+            <option th:each="r: ${repo.reviewers.getList()}"
+                    th:value="${r.getName()}"
+                    th:text="${r.getName()}"></option>
+        </select>
+    </p>
+    <p><input type="submit" value="Отправить"/></p>
+</form>
+
 <h3>Submissions</h3>
 <ul>
     <!--/*@thymesVar id="repo" type="repository.Repository"*/-->
-    <li th:each="s: ${repo.submissionUpdate.getPending()}">
+    <li th:each="s: ${repo.submissionUpdate.getEnqueued()}">
         <!--/*@thymesVar id="s" type="objects.Submission"*/-->
         <div>State: <span th:text="${s.getState()}"></span></div>
         <div>Date: <span th:text="${s.getDate()}"></span></div>
@@ -39,12 +53,12 @@
                 <div>Content: <span th:text="${paper.getContent()}"></span></div>
             </li>
         </ul>
-        <form action="/editorDecision" method="post">
-            <input type="hidden" name="uuid" th:value="${s.getPaper().getId()}" />
-            <input type="submit" name="accepted" value="Accept" />
-            <input type="submit" name="rework" value="Suggest rework" />
-            <input type="submit" name="redirect" value="Redirect to another journal" />
-            <input type="text" name="remark" />
+        <form action="/reviewerDecision" method="post">
+            <input type="hidden" name="uuid" th:value="${s.getPaper().getId()}"/>
+            <input type="submit" name="accept" value="Accept"/>
+            <input type="submit" name="neutral" value="Neutral"/>
+            <input type="submit" name="reject" value="Reject"/>
+            <input type="text" name="remark"/>
         </form>
     </li>
 </ul>

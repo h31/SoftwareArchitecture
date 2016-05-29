@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Similar</title>
+</head>
+<body>
+
+<h3>Submissions</h3>
+<ul>
+    <!--/*@thymesVar id="repo" type="repository.Repository"*/-->
+    <li th:each="s: ${repo.submissions.getList()}">
+        <!--/*@thymesVar id="s" type="objects.Submission"*/-->
+        <div>State: <span th:text="${s.getState()}"></span></div>
+        <div>Date: <span th:text="${s.getDate()}"></span></div>
+        <ul>
+            <li th:each="paper: ${s.getPaper()}">
+                <!--/*@thymesVar id="item" type="objects.Paper"*/-->
+                <div>Title: <span th:text="${paper.getTitle()}"></span></div>
+                <div>Abstract: <span th:text="${paper.getAbstractTxt()}"></span></div>
+                <div>Content: <span th:text="${paper.getContent()}"></span></div>
+            </li>
+        </ul>
+        <div>Similar:</div>
+        <ul>
+            <li th:each="title: ${repo.similarPapers.getSimilarTitles(s.getPaper())}">
+                <div th:text="${title}"></div>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+</body>
+</html>
