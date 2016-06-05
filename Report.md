@@ -75,10 +75,10 @@
 # Диаграмма последовательностей
 
 ## Написание статьи и отправка в журнал
-![Прием пациента](https://raw.githubusercontent.com/h31/SoftwareArchitecture/master/Seq1.png)
+![Seq1](https://raw.githubusercontent.com/h31/SoftwareArchitecture/master/Seq1.png)
 
 ## Рецензирование
-![Регистрация пациента](https://raw.githubusercontent.com/h31/SoftwareArchitecture/master/Seq1.png)
+![Seq2](https://raw.githubusercontent.com/h31/SoftwareArchitecture/master/Seq2.png)
 
 # Проектирование слоя бизнесс-логики
 В качестве архитектурного шаблона был выбран шаблон "Модель предметной области".
