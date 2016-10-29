@@ -11,8 +11,8 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import repository.Repository;
 
 import repository.RepositoryInit;
-import services.SimilarPapers;
 import spark.ModelAndView;
+import spark.servlet.SparkApplication;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,8 +20,9 @@ import java.util.*;
 
 import static spark.Spark.*;
 
-public class WebUI {
-    public static void main(String[] args) {
+public class WebUI implements SparkApplication {
+    @Override
+    public void init() {
         staticFiles.location("/"); // Static files
 
         RepositoryInit init = new RepositoryInit();
