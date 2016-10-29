@@ -22,8 +22,7 @@ public class ReviewerMapper extends Mapper<Reviewer> implements ReviewerStorage 
     protected Reviewer makeObject(Connection connection, Map<String, Object> result) {
         String name = (String) result.get("rname");
         String university = (String) result.get("university");
-        UUID id = (UUID) result.get("id");
-        return new Reviewer(name, university, id);
+        return new Reviewer(name, university);
     }
 
     @Override
@@ -55,14 +54,20 @@ public class ReviewerMapper extends Mapper<Reviewer> implements ReviewerStorage 
     }
 
     @Override
+    protected Class<Reviewer> getEntityClass() {
+        return Reviewer.class;
+    }
+
+    @Override
     public Optional<Reviewer> get(String name) {
-        try(Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM reviewers WHERE RNAME = :rname")
-                    .addParameter("rname", name)
-                    .executeAndFetchTable()
-                    .asList().stream()
-                    .map(it -> makeObject(con, it))
-                    .findFirst();
-        }
+//        try(Connection con = sql2o.open()) {
+//            return con.createQuery("SELECT * FROM reviewers WHERE RNAME = :rname")
+//                    .addParameter("rname", name)
+//                    .executeAndFetchTable()
+//                    .asList().stream()
+//                    .map(it -> makeObject(con, it))
+//                    .findFirst();
+//        }
+        return Optional.empty();
     }
 }

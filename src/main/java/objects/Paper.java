@@ -1,5 +1,6 @@
 package objects;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -7,16 +8,19 @@ import java.util.UUID;
  * Created by Artyom on 11.04.2016.
  */
 
+@Entity
 public class Paper {
+    @Id @GeneratedValue
     private UUID id;
     private String title;
+    @OneToMany(cascade = CascadeType.MERGE)
     private List<Researcher> authors;
+    @ElementCollection
     private List<String> keywords;
     private String abstractTxt;
     private String content;
 
     public Paper(String title, List<Researcher> authors, List<String> keywords, String abstractTxt, String content) {
-        this.id = UUID.randomUUID();
         this.title = title;
         this.authors = authors;
         this.keywords = keywords;
@@ -27,7 +31,10 @@ public class Paper {
     public Paper(String title, List<Researcher> authors, List<String> keywords,
                  String abstractTxt, String content, UUID id) {
         this(title, authors, keywords, abstractTxt, content);
-        this.id = id;
+//        this.id = id;
+    }
+
+    public Paper() {
     }
 
     public String getTitle() {

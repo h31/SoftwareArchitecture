@@ -17,4 +17,6 @@ public interface RepositoryLocal {
     public ReviewerRemarkStorage getReviewerRemarks();
     public SubmissionUpdate getSubmissionUpdate();
     public SimilarPapers getSimilarPapers();
+    public void init();
+    public void recreate();
 }

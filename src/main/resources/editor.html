@@ -39,7 +39,7 @@
                 <div>Content: <span th:text="${paper.getContent()}"></span></div>
             </li>
         </ul>
-        <form action="/editorDecision" method="post">
+        <form action="editorDecision" method="post">
             <input type="hidden" name="uuid" th:value="${s.getPaper().getId()}" />
             <input type="submit" name="accepted" value="Accept" />
             <input type="submit" name="rework" value="Suggest rework" />

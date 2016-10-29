@@ -24,7 +24,7 @@ public class RepositoryInit {
     }
 
     public void addReviewers() {
-        repo.getReviewers().add(new Reviewer("Rodrigo", "CMU", UUID.randomUUID()));
+        repo.getReviewers().add(new Reviewer("Rodrigo", "CMU"));
     }
 
     public void addJournals() {
@@ -51,7 +51,7 @@ public class RepositoryInit {
         List<Submission> submissions = repo.getSubmissions().getList();
         SubmissionUpdate update = new SubmissionUpdate(getRepo());
         for (Submission s: submissions) {
-            update.editorialUpdate(s, new EditorialRemark(EditorialRemark.Decision.ACCEPT, "", UUID.randomUUID()));
+            update.editorialUpdate(s, new EditorialRemark(EditorialRemark.Decision.ACCEPT, ""));
         }
     }
 

@@ -1,17 +1,31 @@
 package objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Created by Artyom on 11.04.2016.
  */
+@Entity
 public class Submission {
+    @Id @GeneratedValue
+    UUID id;
     private State state;
+    @OneToOne
     private Paper paper;
-    private Optional<ReviewerRemark> reviewerRemark;
-    private Optional<EditorialRemark> editorialRemark;
+    @OneToOne
+    private ReviewerRemark reviewerRemark;
+    @OneToOne
+    private EditorialRemark editorialRemark;
+
+    public Submission() {
+    }
 
     public Date getDate() {
         return date;
@@ -23,8 +37,8 @@ public class Submission {
         this.date = new Date();
         this.state = State.PENDING;
         this.paper = paper;
-        reviewerRemark = Optional.empty();
-        editorialRemark = Optional.empty();
+        reviewerRemark = null;
+        editorialRemark = null;
     }
 
     public Submission(Date date, Paper paper) {
@@ -58,18 +72,18 @@ public class Submission {
     }
 
     public Optional<ReviewerRemark> getReviewerRemark() {
-        return reviewerRemark;
+        return Optional.ofNullable(reviewerRemark);
     }
 
     public void setReviewerRemark(ReviewerRemark reviewerRemark) {
-        this.reviewerRemark = Optional.ofNullable(reviewerRemark);
+        this.reviewerRemark = reviewerRemark;
     }
 
     public Optional<EditorialRemark> getEditorialRemark() {
-        return editorialRemark;
+        return Optional.ofNullable(editorialRemark);
     }
 
     public void setEditorialRemark(EditorialRemark editorialRemark) {
-        this.editorialRemark = Optional.ofNullable(editorialRemark);
+        this.editorialRemark = editorialRemark;
     }
 }

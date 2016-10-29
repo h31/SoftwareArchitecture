@@ -4,8 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import repository.Repository;
 import repository.RepositoryInit;
+import repository.RepositoryLocal;
 import services.SubmissionUpdate;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,42 +19,45 @@ import static org.junit.Assert.assertTrue;
  * Created by artyom on 22.05.16.
  */
 public class SubmitPaperTest {
-    private Repository repo;
+    private RepositoryLocal repo;
 
     @Before
-    public void init() {
-        RepositoryInit init = new RepositoryInit();
+    public void init() throws NamingException {
+        InitialContext context = new InitialContext();
+        repo = (RepositoryLocal) context.lookup("java:module/Repository");
+        repo.recreate();
+
+        RepositoryInit init = new RepositoryInit(repo);
         init.addResearchers();
         init.addJournals();
         init.addSubmission();
-        repo = init.getRepo();
     }
 
     @Test
     public void submitPaper() {
-        assertTrue(repo.submissions.getList().size() > 0);
+        assertTrue(repo.getSubmissions().getList().size() > 0);
 
-        List<Submission> pending = repo.submissions.get(Submission.State.PENDING);
+        List<Submission> pending = repo.getSubmissions().get(Submission.State.PENDING);
         assertTrue(pending.size() > 0);
         Submission submission = pending.get(0);
 
         EditorialRemark remark = new EditorialRemark(EditorialRemark.Decision.ACCEPT, "Good", UUID.randomUUID());
         new SubmissionUpdate(repo).editorialUpdate(submission, remark);
 
-        assertTrue(repo.submissions.get(Submission.State.REVIEWER_ENQUEUED).size() > 0);
+        assertTrue(repo.getSubmissions().get(Submission.State.REVIEWER_ENQUEUED).size() > 0);
     }
 
     @Test
     public void rejectPaper() {
-        assertTrue(repo.submissions.getList().size() > 0);
+        assertTrue(repo.getSubmissions().getList().size() > 0);
 
-        List<Submission> pending = repo.submissions.get(Submission.State.PENDING);
+        List<Submission> pending = repo.getSubmissions().get(Submission.State.PENDING);
         assertTrue(pending.size() > 0);
         Submission submission = pending.get(0);
 
         EditorialRemark remark = new EditorialRemark(EditorialRemark.Decision.NEEDS_REWORK, "Bad", UUID.randomUUID());
         new SubmissionUpdate(repo).editorialUpdate(submission, remark);
 
-        assertTrue(repo.submissions.get(Submission.State.REJECTED).size() > 0);
+        assertTrue(repo.getSubmissions().get(Submission.State.REJECTED).size() > 0);
     }
 }

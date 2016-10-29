@@ -25,7 +25,7 @@
 
 <p>Current reviewer is: <span th:text="${currentUser}"></span></p>
 
-<form action="/chooseReviewer" method="post">
+<form action="chooseReviewer" method="post">
     <p>
         <select name="user">
             <!--/*@thymesVar id="repo" type="repository.Repository"*/-->
@@ -53,7 +53,7 @@
                 <div>Content: <span th:text="${paper.getContent()}"></span></div>
             </li>
         </ul>
-        <form action="/reviewerDecision" method="post">
+        <form action="reviewerDecision" method="post">
             <input type="hidden" name="uuid" th:value="${s.getPaper().getId()}"/>
             <input type="submit" name="accept" value="Accept"/>
             <input type="submit" name="neutral" value="Neutral"/>

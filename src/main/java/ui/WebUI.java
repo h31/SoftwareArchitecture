@@ -36,6 +36,8 @@ public class WebUI implements SparkApplication {
             e.printStackTrace();
             return;
         }
+        repo.recreate();
+        repo.init();
 
         get("/researcher", (request1, response1) -> {
             Map<String, Object> attributes = new HashMap<>();
@@ -54,7 +56,7 @@ public class WebUI implements SparkApplication {
         post("/chooseResearcher", (request, response) -> {
             String r = request.queryParams("researcher");
             response.cookie("researcher", r);
-            response.redirect("/researcher");
+            response.redirect("researcher");
             return "";
         });
 
@@ -77,7 +79,7 @@ public class WebUI implements SparkApplication {
             repo.getPapers().add(paper);
             Submission submission = new Submission(paper);
             repo.getSubmissions().add(submission);
-            response.redirect("/researcher");
+            response.redirect("researcher");
             return "";
         });
 
@@ -101,10 +103,10 @@ public class WebUI implements SparkApplication {
                 halt(500, "Invalid decision");
                 return "";
             }
-            EditorialRemark remark = new EditorialRemark(decision, remarkText, UUID.randomUUID());
+            EditorialRemark remark = new EditorialRemark(decision, remarkText);
             repo.getSubmissionUpdate().editorialUpdate(submission.get(), remark);
 
-            response.redirect("/editor");
+            response.redirect("editor");
             return "";
         });
 
@@ -119,7 +121,7 @@ public class WebUI implements SparkApplication {
         post("/chooseReviewer", (request, response) -> {
             String r = request.queryParams("user");
             response.cookie("reviewer", r);
-            response.redirect("/reviewer");
+            response.redirect("reviewer");
             return "";
         });
 
@@ -154,7 +156,7 @@ public class WebUI implements SparkApplication {
             ReviewerRemark remark = new ReviewerRemark(reviewer.get(), mark, remarkText, UUID.randomUUID());
             repo.getSubmissionUpdate().reviewerUpdate(submission.get(), remark);
 
-            response.redirect("/reviewer");
+            response.redirect("reviewer");
             return "";
         });
 

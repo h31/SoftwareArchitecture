@@ -1,10 +1,15 @@
 package objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.UUID;
 
 /**
  * Created by artyom on 23.05.16.
  */
+@Entity
 public class ReviewerRemark {
     public ReviewerRemark(Reviewer reviewer, Mark mark, String text, UUID id) {
         this.reviewer = reviewer;
@@ -13,10 +18,16 @@ public class ReviewerRemark {
         this.id = id;
     }
 
+    @ManyToOne
     Reviewer reviewer;
     Mark mark;
     String text;
+    @Id
+    @GeneratedValue
     UUID id;
+
+    public ReviewerRemark() {
+    }
 
     public enum Mark {
         ACCEPT,

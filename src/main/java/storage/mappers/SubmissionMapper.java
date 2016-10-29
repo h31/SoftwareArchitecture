@@ -77,18 +77,23 @@ public class SubmissionMapper extends Mapper<Submission> implements SubmissionSt
     }
 
     @Override
+    protected Class<Submission> getEntityClass() {
+        return Submission.class;
+    }
+
+    @Override
     public void update(Submission submission) {
-        try(Connection con = sql2o.open()) {
-            con.createQuery("UPDATE SUBMISSIONS SET STATE = :state, editorial_remark_id = :ed, reviewer_remark_id = :rev" +
-                    " WHERE PAPER_UUID = :id AND DATE = :date")
-                    .addParameter("state", submission.getState())
-                    .addParameter("ed", repo.submissionUpdate.getEditorialID(submission))
-                    .addParameter("rev", repo.submissionUpdate.getReviewerID(submission))
-                    .addParameter("id", submission.getPaper().getId())
-                    .addParameter("date", submission.getDate())
-                    .executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try(Connection con = sql2o.open()) {
+//            con.createQuery("UPDATE SUBMISSIONS SET STATE = :state, editorial_remark_id = :ed, reviewer_remark_id = :rev" +
+//                    " WHERE PAPER_UUID = :id AND DATE = :date")
+//                    .addParameter("state", submission.getState())
+//                    .addParameter("ed", repo.submissionUpdate.getEditorialID(submission))
+//                    .addParameter("rev", repo.submissionUpdate.getReviewerID(submission))
+//                    .addParameter("id", submission.getPaper().getId())
+//                    .addParameter("date", submission.getDate())
+//                    .executeUpdate();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 }

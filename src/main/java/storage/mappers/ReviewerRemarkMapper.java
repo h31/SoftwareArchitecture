@@ -61,4 +61,9 @@ public class ReviewerRemarkMapper extends Mapper<ReviewerRemark> implements Revi
     protected Query deleteAllData(Connection connection) {
         return connection.createQuery("DELETE FROM REVIEWER_REMARK");
     }
+
+    @Override
+    protected Class<ReviewerRemark> getEntityClass() {
+        return ReviewerRemark.class;
+    }
 }

@@ -51,14 +51,7 @@ public class ResearcherMapper extends Mapper<Researcher> implements ResearcherSt
     }
 
     @Override
-    public Optional<Researcher> get(String name) {
-        try(Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM RESEARCHERS WHERE RNAME = :rname")
-                    .addParameter("rname", name)
-                    .executeAndFetchTable()
-                    .asList().stream()
-                    .map(it -> makeObject(con, it))
-                    .findFirst();
-        }
+    protected Class<Researcher> getEntityClass() {
+        return Researcher.class;
     }
 }

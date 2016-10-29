@@ -1,22 +1,31 @@
 package objects;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Artyom on 11.04.2016.
  */
+@Entity
 public class Journal {
-    private final String name;
+    @Id
+    private String name;
     private String formatRules;
     private boolean formattedByEditors;
 
+    @OneToMany
     private List<Submission> submissions = new ArrayList<>();
 
     public Journal(String name, String formatRules, boolean formattedByEditors) {
         this.name = name;
         this.formatRules = formatRules;
         this.formattedByEditors = formattedByEditors;
+    }
+
+    public Journal() {
     }
 
     public void setFormatRules(String formatRules) {

@@ -23,8 +23,7 @@ public class EditorialRemarkMapper extends Mapper<EditorialRemark> implements Ed
         String decisionString = (String) result.get("decision");
         EditorialRemark.Decision decision = EditorialRemark.Decision.valueOf(decisionString);
         String remark = (String) result.get("remark");
-        UUID id = (UUID) result.get("id");
-        return new EditorialRemark(decision, remark, id);
+        return new EditorialRemark(decision, remark);
     }
 
     @Override
@@ -53,5 +52,10 @@ public class EditorialRemarkMapper extends Mapper<EditorialRemark> implements Ed
     @Override
     protected Query deleteAllData(Connection connection) {
         return connection.createQuery("DELETE FROM editorial_remark");
+    }
+
+    @Override
+    protected Class<EditorialRemark> getEntityClass() {
+        return EditorialRemark.class;
     }
 }

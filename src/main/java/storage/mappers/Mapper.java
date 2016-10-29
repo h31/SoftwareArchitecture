@@ -6,6 +6,11 @@ import org.sql2o.Sql2o;
 import repository.Repository;
 import storage.Storage;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,51 +19,40 @@ import java.util.stream.Collectors;
  * Created by artyom on 22.05.16.
  */
 abstract public class Mapper<T> implements Storage<T> {
-    private final String dbPath = "jdbc:postgresql://localhost:5432/journal";
-    private final String user = "journal";
-    private final String password = "qwerty";
-
-    protected Sql2o sql2o = new Sql2o(dbPath, user, password);
     protected Repository repo;
 
     public Mapper(Repository repo) {
         this.repo = repo;
     }
 
+    public EntityManager em = Persistence.createEntityManagerFactory("COLIBRI").createEntityManager();
+
     @Override
     public List<T> getList() {
-        try(Connection con = sql2o.open()) {
-            return selectQuery(con)
-                    .executeAndFetchTable()
-                    .asList().stream()
-                    .map(it -> makeObject(con, it))
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
+        CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(getEntityClass());
+        Root<T> root = query.from(getEntityClass());
+        query.select(root);
+        List<T> result = em.createQuery(query).getResultList();
+        return result;
     }
 
     @Override
     public void add(T entry) {
-        try(Connection con = sql2o.open()) {
-            insertQuery(con, entry)
-                    .executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
+        em.getTransaction().begin();
+        em.persist(entry);
+        em.getTransaction().commit();
     }
 
     @Override
     public void recreate() {
-        try(Connection con = sql2o.open()) {
-            createTableQuery(con);
-            deleteAllData(con).executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
+//        em.clear();
+//        try(Connection con = sql2o.open()) {
+//            createTableQuery(con);
+//            deleteAllData(con).executeUpdate();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw e;
+//        }
     }
 
     abstract protected T makeObject(Connection connection, Map<String, Object> result);
@@ -66,4 +60,5 @@ abstract public class Mapper<T> implements Storage<T> {
     abstract protected Query insertQuery(Connection connection, T entry);
     abstract protected void createTableQuery(Connection connection);
     abstract protected Query deleteAllData(Connection connection);
+    abstract protected Class<T> getEntityClass();
 }

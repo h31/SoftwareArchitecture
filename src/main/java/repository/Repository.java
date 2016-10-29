@@ -13,7 +13,7 @@ import javax.ejb.Singleton;
 
 @Singleton
 public class Repository implements RepositoryLocal {
-    public Repository() {
+    public void recreate() {
         papers.recreate();
         researchers.recreate();
         journals.recreate();
@@ -21,7 +21,9 @@ public class Repository implements RepositoryLocal {
         editorialRemarks.recreate();
         reviewerRemarks.recreate();
         submissions.recreate();
+    }
 
+    public void init() {
         RepositoryInit init = new RepositoryInit(this);
         init.addResearchers();
         init.addJournals();
