@@ -11,10 +11,13 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import repository.Repository;
 
 import repository.RepositoryInit;
+import repository.RepositoryLocal;
 import spark.ModelAndView;
 import spark.servlet.SparkApplication;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
@@ -25,12 +28,14 @@ public class WebUI implements SparkApplication {
     public void init() {
         staticFiles.location("/"); // Static files
 
-        RepositoryInit init = new RepositoryInit();
-        init.addResearchers();
-        init.addJournals();
-        init.addSubmission();
-        init.addReviewers();
-        Repository repo = Repository.getInstance();  // init.getRepo();
+        RepositoryLocal repo;
+        try {
+            InitialContext context = new InitialContext();
+            repo = (RepositoryLocal) context.lookup("java:module/Repository");
+        } catch (NamingException e) {
+            e.printStackTrace();
+            return;
+        }
 
         get("/researcher", (request1, response1) -> {
             Map<String, Object> attributes = new HashMap<>();
@@ -59,7 +64,7 @@ public class WebUI implements SparkApplication {
                 return "Please select researcher first";
             }
 
-            Optional<Researcher> researcher = repo.researchers.get(r);
+            Optional<Researcher> researcher = repo.getResearchers().get(r);
             if (!researcher.isPresent()) {
                 return "Please select researcher first";
             }
@@ -69,9 +74,9 @@ public class WebUI implements SparkApplication {
             String content = request.queryParams("content");;
             Paper paper = new Paper(title, Collections.singletonList(researcher.get()),
                     Collections.emptyList(), abstractTxt, content);
-            repo.papers.add(paper);
+            repo.getPapers().add(paper);
             Submission submission = new Submission(paper);
-            repo.submissions.add(submission);
+            repo.getSubmissions().add(submission);
             response.redirect("/researcher");
             return "";
         });
@@ -80,7 +85,7 @@ public class WebUI implements SparkApplication {
             Set<String> params = request.queryParams();
             String uuidString = request.queryParams("uuid");
             UUID uuid = UUID.fromString(uuidString);
-            Optional<Submission> submission = repo.submissions.get(uuid);
+            Optional<Submission> submission = repo.getSubmissions().get(uuid);
             if (!submission.isPresent()) {
                 halt(500, "No such submission");
             }
@@ -97,7 +102,7 @@ public class WebUI implements SparkApplication {
                 return "";
             }
             EditorialRemark remark = new EditorialRemark(decision, remarkText, UUID.randomUUID());
-            repo.submissionUpdate.editorialUpdate(submission.get(), remark);
+            repo.getSubmissionUpdate().editorialUpdate(submission.get(), remark);
 
             response.redirect("/editor");
             return "";
@@ -122,7 +127,7 @@ public class WebUI implements SparkApplication {
             Set<String> params = request.queryParams();
             String uuidString = request.queryParams("uuid");
             UUID uuid = UUID.fromString(uuidString);
-            Optional<Submission> submission = repo.submissions.get(uuid);
+            Optional<Submission> submission = repo.getSubmissions().get(uuid);
             if (!submission.isPresent()) {
                 halt(500, "No such submission");
             }
@@ -142,12 +147,12 @@ public class WebUI implements SparkApplication {
             if (user == null) {
                 halt(HttpServletResponse.SC_BAD_REQUEST, "Please choose reviewer first");
             }
-            Optional<Reviewer> reviewer = repo.reviewers.get(user);
+            Optional<Reviewer> reviewer = repo.getReviewers().get(user);
             if (!reviewer.isPresent()) {
                 halt(HttpServletResponse.SC_BAD_REQUEST, "Unknown reviewer");
             }
             ReviewerRemark remark = new ReviewerRemark(reviewer.get(), mark, remarkText, UUID.randomUUID());
-            repo.submissionUpdate.reviewerUpdate(submission.get(), remark);
+            repo.getSubmissionUpdate().reviewerUpdate(submission.get(), remark);
 
             response.redirect("/reviewer");
             return "";
@@ -155,12 +160,12 @@ public class WebUI implements SparkApplication {
 
         get("/paperFetch", (request, response) -> {
             response.type("application/json");
-            return repo.submissionUpdate.getInPool();
+            return repo.getSubmissionUpdate().getInPool();
         }, new JacksonTransformer(new ObjectMapper()));
 
         get("/paperFetchXML", (request, response) -> {
             response.type("application/xml");
-            return repo.submissionUpdate.getInPool();
+            return repo.getSubmissionUpdate().getInPool();
         }, new JacksonTransformer(new XmlMapper()));
 
         get("/similar", (request1, response1) -> {

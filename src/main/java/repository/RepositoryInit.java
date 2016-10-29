@@ -4,56 +4,58 @@ import objects.*;
 import repository.Repository;
 import services.SubmissionUpdate;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import java.util.*;
 
 /**
  * Created by artyom on 22.05.16.
  */
 public class RepositoryInit {
-    private Repository repo;
+    private RepositoryLocal repo;
 
-    public RepositoryInit() {
-        repo = Repository.recreate();
+    public RepositoryInit(RepositoryLocal repositoryLocal) {
+        this.repo = repositoryLocal;
     }
 
     public void addResearchers() {
-        repo.researchers.add(new Researcher("Peter", "MIT"));
-        repo.researchers.add(new Researcher("Mikhail", "SPbSTU"));
+        repo.getResearchers().add(new Researcher("Peter", "MIT"));
+        repo.getResearchers().add(new Researcher("Mikhail", "SPbSTU"));
     }
 
     public void addReviewers() {
-        repo.reviewers.add(new Reviewer("Rodrigo", "CMU", UUID.randomUUID()));
+        repo.getReviewers().add(new Reviewer("Rodrigo", "CMU", UUID.randomUUID()));
     }
 
     public void addJournals() {
-        repo.journals.add(new Journal("Nature", "ALL CAPS", false));
-        repo.journals.add(new Journal("Science", "14pt", true));
+        repo.getJournals().add(new Journal("Nature", "ALL CAPS", false));
+        repo.getJournals().add(new Journal("Science", "14pt", true));
     }
 
     public void addSubmission() {
-        Optional<Researcher> r = repo.researchers.get("Peter");
+        Optional<Researcher> r = repo.getResearchers().get("Peter");
         Paper writtenPaper = new Paper("Code Uglify",
                 Collections.singletonList(r.get()),
                 Collections.singletonList("code"),
                 "Abstract",
                 "Text");
-        repo.papers.add(writtenPaper);
+        repo.getPapers().add(writtenPaper);
 
         Date currentDate = new Date();
 
         Submission submission = new Submission(currentDate, writtenPaper);
-        repo.submissions.add(submission);
+        repo.getSubmissions().add(submission);
     }
 
     public void setEnqueuedSubmissions() {
-        List<Submission> submissions = repo.submissions.getList();
+        List<Submission> submissions = repo.getSubmissions().getList();
         SubmissionUpdate update = new SubmissionUpdate(getRepo());
         for (Submission s: submissions) {
             update.editorialUpdate(s, new EditorialRemark(EditorialRemark.Decision.ACCEPT, "", UUID.randomUUID()));
         }
     }
 
-    public Repository getRepo() {
+    public RepositoryLocal getRepo() {
         return repo;
     }
 }

@@ -9,31 +9,24 @@ import storage.java.EditorialRemarkJavaStorage;
 import storage.mappers.*;
 import storage.java.JournalJavaStorage;
 
-public class Repository {
-    // Singleton
+import javax.ejb.Singleton;
 
-    private static Repository instance = null;
+@Singleton
+public class Repository implements RepositoryLocal {
+    public Repository() {
+        papers.recreate();
+        researchers.recreate();
+        journals.recreate();
+        reviewers.recreate();
+        editorialRemarks.recreate();
+        reviewerRemarks.recreate();
+        submissions.recreate();
 
-    private Repository() {}
-
-    public static Repository getInstance() {
-        if (instance == null) {
-            instance = new Repository();
-        }
-        return instance;
-    }
-
-    public static Repository recreate() {
-        instance = new Repository();
-        instance.papers.recreate();
-        instance.researchers.recreate();
-        instance.journals.recreate();
-        instance.reviewers.recreate();
-        instance.editorialRemarks.recreate();
-        instance.reviewerRemarks.recreate();
-        instance.submissions.recreate();
-
-        return getInstance();
+        RepositoryInit init = new RepositoryInit(this);
+        init.addResearchers();
+        init.addJournals();
+        init.addSubmission();
+        init.addReviewers();
     }
 
     public PaperStorage papers = new PaperMapper(this);
@@ -46,4 +39,40 @@ public class Repository {
 
     public SubmissionUpdate submissionUpdate = new SubmissionUpdate(this);
     public SimilarPapers similarPapers = new SimilarPapers();
+
+    public PaperStorage getPapers() {
+        return papers;
+    }
+
+    public ResearcherStorage getResearchers() {
+        return researchers;
+    }
+
+    public JournalStorage getJournals() {
+        return journals;
+    }
+
+    public SubmissionStorage getSubmissions() {
+        return submissions;
+    }
+
+    public ReviewerStorage getReviewers() {
+        return reviewers;
+    }
+
+    public EditorialRemarkStorage getEditorialRemarks() {
+        return editorialRemarks;
+    }
+
+    public ReviewerRemarkStorage getReviewerRemarks() {
+        return reviewerRemarks;
+    }
+
+    public SubmissionUpdate getSubmissionUpdate() {
+        return submissionUpdate;
+    }
+
+    public SimilarPapers getSimilarPapers() {
+        return similarPapers;
+    }
 }

@@ -4,6 +4,7 @@ import objects.EditorialRemark;
 import objects.ReviewerRemark;
 import objects.Submission;
 import repository.Repository;
+import repository.RepositoryLocal;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,22 +15,22 @@ import java.util.UUID;
  * Created by artyom on 22.05.16.
  */
 public class SubmissionUpdate {
-    Repository repo;
+    private RepositoryLocal repo;
 
-    public SubmissionUpdate(Repository repository) {
+    public SubmissionUpdate(RepositoryLocal repository) {
         this.repo = repository;
     }
 
     public List<Submission> getPending() {
-        return repo.submissions.get(Submission.State.PENDING);
+        return repo.getSubmissions().get(Submission.State.PENDING);
     }
 
     public List<Submission> getEnqueued() {
-        return repo.submissions.get(Submission.State.REVIEWER_ENQUEUED);
+        return repo.getSubmissions().get(Submission.State.REVIEWER_ENQUEUED);
     }
 
     public List<Submission> getInPool() {
-        return repo.submissions.get(Submission.State.IN_POOL);
+        return repo.getSubmissions().get(Submission.State.IN_POOL);
     }
 
     public void editorialUpdate(Submission submission, EditorialRemark remark) {
@@ -46,9 +47,9 @@ public class SubmissionUpdate {
                 break;
         }
 
-        repo.editorialRemarks.add(remark);
+        repo.getEditorialRemarks().add(remark);
         submission.setEditorialRemark(remark);
-        repo.submissions.update(submission);
+        repo.getSubmissions().update(submission);
     }
 
     public void reviewerUpdate(Submission submission, ReviewerRemark remark) {
@@ -65,9 +66,9 @@ public class SubmissionUpdate {
                 break;
         }
 
-        repo.reviewerRemarks.add(remark);
+        repo.getReviewerRemarks().add(remark);
         submission.setReviewerRemark(remark);
-        repo.submissions.update(submission);
+        repo.getSubmissions().update(submission);
     }
 
     public UUID getEditorialID(Submission submission) {
