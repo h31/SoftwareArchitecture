@@ -41,7 +41,7 @@ public class SubmitPaperTest {
         assertTrue(pending.size() > 0);
         Submission submission = pending.get(0);
 
-        EditorialRemark remark = new EditorialRemark(EditorialRemark.Decision.ACCEPT, "Good", UUID.randomUUID());
+        EditorialRemark remark = new EditorialRemark(EditorialRemark.Decision.ACCEPT, "Good");
         new SubmissionUpdate(repo).editorialUpdate(submission, remark);
 
         assertTrue(repo.getSubmissions().get(Submission.State.REVIEWER_ENQUEUED).size() > 0);
@@ -55,7 +55,7 @@ public class SubmitPaperTest {
         assertTrue(pending.size() > 0);
         Submission submission = pending.get(0);
 
-        EditorialRemark remark = new EditorialRemark(EditorialRemark.Decision.NEEDS_REWORK, "Bad", UUID.randomUUID());
+        EditorialRemark remark = new EditorialRemark(EditorialRemark.Decision.NEEDS_REWORK, "Bad");
         new SubmissionUpdate(repo).editorialUpdate(submission, remark);
 
         assertTrue(repo.getSubmissions().get(Submission.State.REJECTED).size() > 0);

@@ -19,41 +19,6 @@ public class ReviewerMapper extends Mapper<Reviewer> implements ReviewerStorage 
     }
 
     @Override
-    protected Reviewer makeObject(Connection connection, Map<String, Object> result) {
-        String name = (String) result.get("rname");
-        String university = (String) result.get("university");
-        return new Reviewer(name, university);
-    }
-
-    @Override
-    protected Query selectQuery(Connection connection) {
-        return connection.createQuery("SELECT * FROM reviewers");
-    }
-
-    @Override
-    protected Query insertQuery(Connection connection, Reviewer entry) {
-        return connection.createQuery("INSERT INTO reviewers (ID, RNAME, UNIVERSITY)" +
-                " VALUES (:id, :rname, :university)")
-                .addParameter("id", entry.getId())
-                .addParameter("rname", entry.getName())
-                .addParameter("university", entry.getUniversity());
-    }
-
-    @Override
-    protected void createTableQuery(Connection connection) {
-        connection.createQuery("CREATE TABLE IF NOT EXISTS reviewers (" +
-                "id UUID PRIMARY KEY," +
-                "rname VARCHAR(100)," +
-                "university VARCHAR(100)" +
-                ")").executeUpdate();
-    }
-
-    @Override
-    protected Query deleteAllData(Connection connection) {
-        return connection.createQuery("DELETE FROM reviewers");
-    }
-
-    @Override
     protected Class<Reviewer> getEntityClass() {
         return Reviewer.class;
     }

@@ -55,10 +55,5 @@ abstract public class Mapper<T> implements Storage<T> {
 //        }
     }
 
-    abstract protected T makeObject(Connection connection, Map<String, Object> result);
-    abstract protected Query selectQuery(Connection connection);
-    abstract protected Query insertQuery(Connection connection, T entry);
-    abstract protected void createTableQuery(Connection connection);
-    abstract protected Query deleteAllData(Connection connection);
     abstract protected Class<T> getEntityClass();
 }

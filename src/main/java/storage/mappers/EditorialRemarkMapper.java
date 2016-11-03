@@ -19,42 +19,6 @@ public class EditorialRemarkMapper extends Mapper<EditorialRemark> implements Ed
     }
 
     @Override
-    protected EditorialRemark makeObject(Connection connection, Map<String, Object> result) {
-        String decisionString = (String) result.get("decision");
-        EditorialRemark.Decision decision = EditorialRemark.Decision.valueOf(decisionString);
-        String remark = (String) result.get("remark");
-        return new EditorialRemark(decision, remark);
-    }
-
-    @Override
-    protected Query selectQuery(Connection connection) {
-        return connection.createQuery("SELECT * FROM editorial_remark");
-    }
-
-    @Override
-    protected Query insertQuery(Connection connection, EditorialRemark entry) {
-        return connection.createQuery("INSERT INTO editorial_remark (id, decision, remark)" +
-                " VALUES (:id, :decision, :remark)")
-                .addParameter("id", entry.getId())
-                .addParameter("decision", entry.getDecision())
-                .addParameter("remark", entry.getRemark());
-    }
-
-    @Override
-    protected void createTableQuery(Connection connection) {
-        connection.createQuery("CREATE TABLE IF NOT EXISTS EDITORIAL_REMARK (" +
-                "id UUID PRIMARY KEY," +
-                "decision VARCHAR(20)," +
-                "remark VARCHAR(100)" +
-                ")").executeUpdate();
-    }
-
-    @Override
-    protected Query deleteAllData(Connection connection) {
-        return connection.createQuery("DELETE FROM editorial_remark");
-    }
-
-    @Override
     protected Class<EditorialRemark> getEntityClass() {
         return EditorialRemark.class;
     }
