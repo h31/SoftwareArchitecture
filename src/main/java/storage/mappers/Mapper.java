@@ -1,8 +1,5 @@
 package storage.mappers;
 
-import org.sql2o.Connection;
-import org.sql2o.Query;
-import org.sql2o.Sql2o;
 import repository.Repository;
 import storage.Storage;
 
@@ -10,10 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by artyom on 22.05.16.

@@ -25,7 +25,7 @@
 
 <p>Current researcher is: <span th:text="${currentRes}"></span></p>
 
-<form action="/chooseResearcher" method="post">
+<form action="chooseResearcher" method="post">
     <p><select name="researcher">
         <!--/*@thymesVar id="repo" type="repository.Repository"*/-->
         <option th:each="r: ${repo.researchers.getList()}" th:value="${r.getName()}" th:text="${r.getName()}"></option>

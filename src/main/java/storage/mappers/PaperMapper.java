@@ -1,14 +1,11 @@
 package storage.mappers;
 
 import objects.Paper;
-import objects.Researcher;
-import org.sql2o.Connection;
-import org.sql2o.Query;
 import repository.Repository;
 import storage.PaperStorage;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Created by artyom on 22.05.16.

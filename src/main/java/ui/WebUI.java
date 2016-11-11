@@ -8,10 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import objects.*;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import repository.Repository;
 
-import repository.RepositoryInit;
 import repository.RepositoryLocal;
+import services.Facade;
 import spark.ModelAndView;
 import spark.servlet.SparkApplication;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -29,9 +28,11 @@ public class WebUI implements SparkApplication {
         staticFiles.location("/"); // Static files
 
         RepositoryLocal repo;
+        Facade facade;
         try {
             InitialContext context = new InitialContext();
-            repo = (RepositoryLocal) context.lookup("java:module/Repository");
+            facade = (Facade) context.lookup("java:module/FacadeImpl");
+            repo = facade.getRepo();
         } catch (NamingException e) {
             e.printStackTrace();
             return;
@@ -76,9 +77,7 @@ public class WebUI implements SparkApplication {
             String content = request.queryParams("content");;
             Paper paper = new Paper(title, Collections.singletonList(researcher.get()),
                     Collections.emptyList(), abstractTxt, content);
-            repo.getPapers().add(paper);
-            Submission submission = new Submission(paper);
-            repo.getSubmissions().add(submission);
+            facade.addPaper(paper);
             response.redirect("researcher");
             return "";
         });
@@ -86,26 +85,8 @@ public class WebUI implements SparkApplication {
         post("/editorDecision", (request, response) -> {
             Set<String> params = request.queryParams();
             String uuidString = request.queryParams("uuid");
-            UUID uuid = UUID.fromString(uuidString);
-            Optional<Submission> submission = repo.getSubmissions().get(uuid);
-            if (!submission.isPresent()) {
-                halt(500, "No such submission");
-            }
             String remarkText = request.queryParams("remark");
-            EditorialRemark.Decision decision;
-            if (params.contains("accepted")) {
-                decision = EditorialRemark.Decision.ACCEPT;
-            } else if (params.contains("rework")) {
-                decision = EditorialRemark.Decision.NEEDS_REWORK;
-            } else if (params.contains("redirect")) {
-                decision = EditorialRemark.Decision.REDIRECT;
-            } else {
-                halt(500, "Invalid decision");
-                return "";
-            }
-            EditorialRemark remark = new EditorialRemark(decision, remarkText);
-            repo.getSubmissionUpdate().editorialUpdate(submission.get(), remark);
-
+            facade.editorDecision(uuidString, params, remarkText);
             response.redirect("editor");
             return "";
         });
@@ -128,34 +109,9 @@ public class WebUI implements SparkApplication {
         post("/reviewerDecision", (request, response) -> {
             Set<String> params = request.queryParams();
             String uuidString = request.queryParams("uuid");
-            UUID uuid = UUID.fromString(uuidString);
-            Optional<Submission> submission = repo.getSubmissions().get(uuid);
-            if (!submission.isPresent()) {
-                halt(500, "No such submission");
-            }
             String remarkText = request.queryParams("remark");
-            ReviewerRemark.Mark mark;
-            if (params.contains("accept")) {
-                mark = ReviewerRemark.Mark.ACCEPT;
-            } else if (params.contains("neutral")) {
-                mark = ReviewerRemark.Mark.NEUTRAL;
-            } else if (params.contains("reject")) {
-                mark = ReviewerRemark.Mark.REJECT;
-            } else {
-                halt(HttpServletResponse.SC_BAD_REQUEST, "Invalid decision");
-                return "";
-            }
             String user = request.cookie("reviewer");
-            if (user == null) {
-                halt(HttpServletResponse.SC_BAD_REQUEST, "Please choose reviewer first");
-            }
-            Optional<Reviewer> reviewer = repo.getReviewers().get(user);
-            if (!reviewer.isPresent()) {
-                halt(HttpServletResponse.SC_BAD_REQUEST, "Unknown reviewer");
-            }
-            ReviewerRemark remark = new ReviewerRemark(reviewer.get(), mark, remarkText, UUID.randomUUID());
-            repo.getSubmissionUpdate().reviewerUpdate(submission.get(), remark);
-
+            facade.reviewerDecision(uuidString, params, user, remarkText);
             response.redirect("reviewer");
             return "";
         });

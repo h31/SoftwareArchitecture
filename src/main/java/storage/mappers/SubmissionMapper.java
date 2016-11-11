@@ -1,19 +1,8 @@
 package storage.mappers;
 
-import objects.Journal;
-import objects.Paper;
-import objects.Researcher;
 import objects.Submission;
-import org.sql2o.Connection;
-import org.sql2o.Query;
 import repository.Repository;
 import storage.SubmissionStorage;
-
-import java.util.Date;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * Created by artyom on 22.05.16.

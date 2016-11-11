@@ -1,14 +1,10 @@
 package storage.mappers;
 
 import objects.Reviewer;
-import org.sql2o.Connection;
-import org.sql2o.Query;
 import repository.Repository;
 import storage.ReviewerStorage;
 
-import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Created by artyom on 29.05.16.

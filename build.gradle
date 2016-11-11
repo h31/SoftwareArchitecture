@@ -21,7 +21,6 @@ idea {
 //}
 
 dependencies {
-    compile group: 'org.sql2o', name: 'sql2o', version: '1.5.4'
     compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1211'
     compile 'com.sparkjava:spark-core:2.5'
     compile 'com.sparkjava:spark-template-thymeleaf:2.3'
