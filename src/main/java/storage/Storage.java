@@ -8,6 +8,6 @@ import java.util.Optional;
  */
 public interface Storage<T> {
     public List<T> getList();
-    public void add(T entry);
+    public T add(T entry);
     public void recreate();
 }

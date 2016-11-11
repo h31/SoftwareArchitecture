@@ -13,7 +13,7 @@ public class Paper {
     @Id @GeneratedValue
     private UUID id;
     private String title;
-    @OneToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Researcher> authors;
     @ElementCollection
     private List<String> keywords;

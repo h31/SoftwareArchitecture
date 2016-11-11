@@ -39,7 +39,7 @@ public class RepositoryInit {
                 Collections.singletonList("code"),
                 "Abstract",
                 "Text");
-        repo.getPapers().add(writtenPaper);
+        writtenPaper = repo.getPapers().add(writtenPaper);
 
         Date currentDate = new Date();
 

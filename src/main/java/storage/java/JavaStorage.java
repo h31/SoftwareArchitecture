@@ -22,8 +22,9 @@ public class JavaStorage<T> implements Storage<T> {
     }
 
     @Override
-    public void add(T entry) {
+    public T add(T entry) {
         data.add(entry);
+        return entry;
     }
 
     @Override

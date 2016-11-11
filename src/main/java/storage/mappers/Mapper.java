@@ -31,10 +31,11 @@ abstract public class Mapper<T> implements Storage<T> {
     }
 
     @Override
-    public void add(T entry) {
+    public T add(T entry) {
         em.getTransaction().begin();
-        em.persist(entry);
+        T newEntry = em.merge(entry);
         em.getTransaction().commit();
+        return newEntry;
     }
 
     @Override

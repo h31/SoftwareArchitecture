@@ -1,9 +1,6 @@
 package objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,7 +14,7 @@ public class Submission {
     @Id @GeneratedValue
     UUID id;
     private State state;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Paper paper;
     @OneToOne
     private ReviewerRemark reviewerRemark;

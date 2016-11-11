@@ -4,6 +4,7 @@ import objects.Reviewer;
 import repository.Repository;
 import storage.ReviewerStorage;
 
+import javax.persistence.TypedQuery;
 import java.util.Optional;
 
 /**
@@ -21,14 +22,9 @@ public class ReviewerMapper extends Mapper<Reviewer> implements ReviewerStorage 
 
     @Override
     public Optional<Reviewer> get(String name) {
-//        try(Connection con = sql2o.open()) {
-//            return con.createQuery("SELECT * FROM reviewers WHERE RNAME = :rname")
-//                    .addParameter("rname", name)
-//                    .executeAndFetchTable()
-//                    .asList().stream()
-//                    .map(it -> makeObject(con, it))
-//                    .findFirst();
-//        }
-        return Optional.empty();
+        TypedQuery<Reviewer> query = em.createQuery(
+                "SELECT r FROM Reviewer r WHERE r.name = name", Reviewer.class);
+        Reviewer reviewer = query.getSingleResult();
+        return Optional.ofNullable(reviewer);
     }
 }

@@ -29,7 +29,7 @@ public class FacadeImpl implements Facade {
     }
 
     public void addPaper(Paper paper) {
-        repo.getPapers().add(paper);
+        paper = repo.getPapers().add(paper);
         Submission submission = new Submission(paper);
         repo.getSubmissions().add(submission);
 
