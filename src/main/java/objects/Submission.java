@@ -16,9 +16,9 @@ public class Submission {
     private State state;
     @OneToOne(cascade = CascadeType.ALL)
     private Paper paper;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private ReviewerRemark reviewerRemark;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private EditorialRemark editorialRemark;
 
     public Submission() {

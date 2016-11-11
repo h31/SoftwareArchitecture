@@ -22,14 +22,7 @@ public class PaperMapper extends Mapper<Paper> implements PaperStorage {
 
     @Override
     public Optional<Paper> get(UUID uuid) {
-//        try(Connection con = sql2o.open()) {
-//            return con.createQuery("SELECT * FROM PAPERS WHERE id = :id")
-//                    .addParameter("id", uuid)
-//                    .executeAndFetchTable()
-//                    .asList().stream()
-//                    .map(it -> makeObject(con, it))
-//                    .findFirst();
-//        }
-        return Optional.empty();
+        Paper paper = em.find(Paper.class, uuid);
+        return Optional.ofNullable(paper);
     }
 }

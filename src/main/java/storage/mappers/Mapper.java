@@ -19,15 +19,14 @@ abstract public class Mapper<T> implements Storage<T> {
         this.repo = repo;
     }
 
-    public EntityManager em = Persistence.createEntityManagerFactory("COLIBRI").createEntityManager();
+    public EntityManager em = Persistence.createEntityManagerFactory("Journal").createEntityManager();
 
     @Override
     public List<T> getList() {
         CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(getEntityClass());
         Root<T> root = query.from(getEntityClass());
         query.select(root);
-        List<T> result = em.createQuery(query).getResultList();
-        return result;
+        return em.createQuery(query).getResultList();
     }
 
     @Override
