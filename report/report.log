@@ -1,6 +1,6 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.14)  2 DEC 2016 14:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.15)  9 DEC 2016 13:12
 entering extended mode
- restricted \write18 enabled.
+ \write18 enabled.
  %&-line parsing enabled.
 **report.tex
 (./report.tex
@@ -1102,34 +1102,34 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]) (./main.tex
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <14.4> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 5.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 11.
  [1] [2]
 <../UseCases.png, id=22, 740.7675pt x 398.48875pt>
 File: ../UseCases.png Graphic file (type png)
  <use ../UseCases.png>
-Package pdftex.def Info: ../UseCases.png used on input line 144.
+Package pdftex.def Info: ../UseCases.png used on input line 105.
 (pdftex.def)             Requested size: 517.84009pt x 278.56932pt.
 
-<../ClassDiagram.png, id=24, 1560.83125pt x 747.79375pt>
+[3] <../ClassDiagram.png, id=27, 1560.83125pt x 747.79375pt>
 File: ../ClassDiagram.png Graphic file (type png)
 
 <use ../ClassDiagram.png>
-Package pdftex.def Info: ../ClassDiagram.png used on input line 152.
+Package pdftex.def Info: ../ClassDiagram.png used on input line 113.
 (pdftex.def)             Requested size: 517.84009pt x 248.0963pt.
- [3 <../UseCases.png>]
-<../Seq1.png, id=29, 633.36626pt x 628.3475pt>
+ <../Seq1.png, id=28, 633.36626pt x 628.3475pt>
 File: ../Seq1.png Graphic file (type png)
- <use ../Seq1.png>
-Package pdftex.def Info: ../Seq1.png used on input line 163.
+
+<use ../Seq1.png>
+Package pdftex.def Info: ../Seq1.png used on input line 124.
 (pdftex.def)             Requested size: 517.84009pt x 513.77176pt.
- [4 <../ClassDiagram.png>] <../Seq2.png, id=34, 673.51625pt x 600.2425pt>
+ [4 <../UseCases.png> <../ClassDiagram.png>]
+<../Seq2.png, id=34, 673.51625pt x 600.2425pt>
 File: ../Seq2.png Graphic file (type png)
  <use ../Seq2.png>
-Package pdftex.def Info: ../Seq2.png used on input line 171.
+Package pdftex.def Info: ../Seq2.png used on input line 132.
 (pdftex.def)             Requested size: 517.84009pt x 461.51039pt.
-
-[5 <../Seq1.png>]
-Overfull \hbox (6.02888pt too wide) in paragraph at lines 177--177
+ [5 <../Seq1.png>]
+Overfull \hbox (6.02888pt too wide) in paragraph at lines 138--138
 []\T2A/cmr/bx/n/17.28 Объектно-ориентированное про-ек-ти-ро-ва-ние с учј-том ос
 о-
  []
@@ -1137,96 +1137,292 @@ Overfull \hbox (6.02888pt too wide) in paragraph at lines 177--177
 <diagram.pdf, id=39, 833.51402pt x 1113.76097pt>
 File: diagram.pdf Graphic file (type pdf)
  <use diagram.pdf>
-Package pdftex.def Info: diagram.pdf used on input line 185.
+Package pdftex.def Info: diagram.pdf used on input line 146.
 (pdftex.def)             Requested size: 517.84009pt x 691.95222pt.
  [6 <../Seq2.png>] <diagram2.pdf, id=45, 982.06903pt x 986.08403pt>
 File: diagram2.pdf Graphic file (type pdf)
  <use diagram2.pdf>
-Package pdftex.def Info: diagram2.pdf used on input line 193.
+Package pdftex.def Info: diagram2.pdf used on input line 154.
 (pdftex.def)             Requested size: 517.84009pt x 519.95885pt.
 
 [7 <./diagram.pdf>] <diagram3.pdf, id=3136, 463.33101pt x 1960.12305pt>
 File: diagram3.pdf Graphic file (type pdf)
 
 <use diagram3.pdf>
-Package pdftex.def Info: diagram3.pdf used on input line 201.
+Package pdftex.def Info: diagram3.pdf used on input line 162.
 (pdftex.def)             Requested size: 175.49495pt x 742.41861pt.
  [8 <./diagram2.pdf>]
 Overfull \vbox (4.03955pt too high) has occurred while \output is active []
 
 
 [9 <./diagram3.pdf>]
-Overfull \hbox (47.77019pt too wide) in paragraph at lines 220--221
+Overfull \hbox (47.77019pt too wide) in paragraph at lines 181--182
 []\T2A/cmr/m/n/14.4 reviewerDecision(String uuidString, Set<String> params, Str
 ing user, String remarkText)
  []
 
-LaTeX Font Info:    Try loading font information for T2A+cmtt on input line 234
+LaTeX Font Info:    Try loading font information for T2A+cmtt on input line 188
 .
 (/usr/share/texlive/texmf-dist/tex/latex/cyrillic/t2acmtt.fd
 File: t2acmtt.fd 2001/08/11 v1.0a Computer Modern Cyrillic font definitions
-) [10]
+)
 LaTeX Font Info:    Font shape `T2A/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `T2A/cmtt/m/n' tried instead on input line 254.
-
-Overfull \hbox (22.9632pt too wide) in paragraph at lines 286--288
+(Font)              Font shape `T2A/cmtt/m/n' tried instead on input line 192.
+ [10] [11]
+Overfull \hbox (22.9632pt too wide) in paragraph at lines 258--260
 [][][][] 
  []
 
-[11]
-Overfull \hbox (22.9632pt too wide) in paragraph at lines 296--297
+
+Overfull \hbox (22.9632pt too wide) in paragraph at lines 268--269
 [][][][] 
  []
 
 <wildfly.png, id=9333, 1254.6875pt x 758.835pt>
 File: wildfly.png Graphic file (type png)
  <use wildfly.png>
-Package pdftex.def Info: wildfly.png used on input line 306.
+Package pdftex.def Info: wildfly.png used on input line 278.
 (pdftex.def)             Requested size: 517.84009pt x 313.19699pt.
-
-<wildfly2.png, id=9334, 1226.5825pt x 519.9425pt>
+ [12]
+<wildfly2.png, id=9339, 1226.5825pt x 519.9425pt>
 File: wildfly2.png Graphic file (type png)
  <use wildfly2.png>
-Package pdftex.def Info: wildfly2.png used on input line 314.
+Package pdftex.def Info: wildfly2.png used on input line 286.
 (pdftex.def)             Requested size: 517.84009pt x 219.50888pt.
- [12 <./wildfly.png>] <wildfly3.png, id=9341, 1226.5825pt x 667.49374pt>
-File: wildfly3.png Graphic file (type png)
 
-<use wildfly3.png>
-Package pdftex.def Info: wildfly3.png used on input line 322.
+<wildfly3.png, id=9340, 1226.5825pt x 667.49374pt>
+File: wildfly3.png Graphic file (type png)
+ <use wildfly3.png>
+Package pdftex.def Info: wildfly3.png used on input line 294.
 (pdftex.def)             Requested size: 517.84009pt x 281.80194pt.
+ [13 <./wildfly.png> <./wildfly2.png>]
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <14.4> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 326.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 298.
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <7> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 326.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 298.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 326.
- [13 <./wildfly2.png> <./wildfly3.png>]) [14] (./report.aux) ) 
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 298.
+
+<researcher.png, id=9346, 820.06375pt x 583.17876pt>
+File: researcher.png Graphic file (type png)
+ <use researcher.png>
+Package pdftex.def Info: researcher.png used on input line 303.
+(pdftex.def)             Requested size: 517.84009pt x 368.27663pt.
+
+[14 <./wildfly3.png>]
+Underfull \hbox (badness 3919) in paragraph at lines 310--310
+[]|\T2A/cmr/bx/n/14.4 Ожидаемый ре-зуль-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 313--313
+[]|\T2A/cmr/m/n/14.4 Выбранный поль-зо-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 313--313
+\T2A/cmr/m/n/14.4 ва-тель ста-но-вит-ся
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 313--314
+[]|\T2A/cmr/m/n/14.4 Над по-лем вы-бо-ра
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 313--314
+\T2A/cmr/m/n/14.4 поль-зо-ва-те-ля по-яв-ля-
+ []
+
+
+Underfull \hbox (badness 2165) in paragraph at lines 313--314
+\T2A/cmr/m/n/14.4 ет-ся строч-ка: <<Current
+ []
+
+
+Underfull \hbox (badness 1406) in paragraph at lines 315--315
+\T2A/cmr/m/n/14.4 жа-тие кноп-ки <<От-пра-
+ []
+
+
+Underfull \hbox (badness 4254) in paragraph at lines 315--316
+[]|\T2A/cmr/m/n/14.4 В раз-де-ле Submissions
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 317
+ []
+
+<editor.png, id=9352, 820.06375pt x 583.17876pt>
+File: editor.png Graphic file (type png)
+ <use editor.png>
+Package pdftex.def Info: editor.png used on input line 322.
+(pdftex.def)             Requested size: 517.84009pt x 368.27663pt.
+ [15 <./researcher.png>]
+Underfull \hbox (badness 3919) in paragraph at lines 329--329
+[]|\T2A/cmr/bx/n/14.4 Ожидаемый ре-зуль-
+ []
+
+
+Underfull \hbox (badness 3333) in paragraph at lines 332--332
+\T2A/cmr/m/n/14.4 ка и на-жа-тие кноп-ки
+ []
+
+
+Underfull \hbox (badness 1558) in paragraph at lines 332--333
+\T2A/cmr/m/n/14.4 ка на стра-ни-це (по-ме-
+ []
+
+
+Underfull \hbox (badness 2368) in paragraph at lines 332--333
+\T2A/cmr/m/n/14.4 мет-ка <<Review remark:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 334--335
+[]|\T2A/cmr/m/n/14.4 Статья ис-че-за-ет из
+ []
+
+
+Underfull \hbox (badness 2368) in paragraph at lines 334--335
+\T2A/cmr/m/n/14.4 ме-ча-ет-ся как про-смот-
+ []
+
+
+Underfull \hbox (badness 1270) in paragraph at lines 334--335
+\T2A/cmr/m/n/14.4 сле-до-ва-те-ля по-яв-ля-ет-ся
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 334--335
+\T2A/cmr/m/n/14.4 NEEDS_REWORK
+ []
+
+
+Underfull \hbox (badness 3333) in paragraph at lines 336--336
+\T2A/cmr/m/n/14.4 ка и на-жа-тие кноп-ки
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 336--336
+\T2A/cmr/m/n/14.4 Redirect to another
+ []
+
+
+Underfull \hbox (badness 1558) in paragraph at lines 336--337
+\T2A/cmr/m/n/14.4 ка на стра-ни-це (по-ме-
+ []
+
+
+Underfull \hbox (badness 2368) in paragraph at lines 336--337
+\T2A/cmr/m/n/14.4 мет-ка <<Review remark:
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 338
+ []
+
+[16 <./editor.png>] <reviewer.png, id=9361, 820.06375pt x 583.17876pt>
+File: reviewer.png Graphic file (type png)
+
+<use reviewer.png>
+Package pdftex.def Info: reviewer.png used on input line 343.
+(pdftex.def)             Requested size: 517.84009pt x 368.27663pt.
+
+Underfull \hbox (badness 3919) in paragraph at lines 350--350
+[]|\T2A/cmr/bx/n/14.4 Ожидаемый ре-зуль-
+ []
+
+
+Underfull \hbox (badness 3333) in paragraph at lines 353--353
+\T2A/cmr/m/n/14.4 ка и на-жа-тие кноп-ки
+ []
+
+
+Underfull \hbox (badness 1558) in paragraph at lines 353--354
+\T2A/cmr/m/n/14.4 ка на стра-ни-це (по-ме-
+ []
+
+
+Underfull \hbox (badness 2368) in paragraph at lines 353--354
+\T2A/cmr/m/n/14.4 мет-ка <<Review remark:
+ []
+
+
+Underfull \hbox (badness 5431) in paragraph at lines 353--354
+\T2A/cmr/m/n/14.4 ние>>, ста-тья до-ступ-на
+ []
+
+
+Underfull \hbox (badness 3333) in paragraph at lines 355--355
+\T2A/cmr/m/n/14.4 ка и на-жа-тие кноп-ки
+ []
+
+
+Underfull \hbox (badness 1558) in paragraph at lines 355--356
+\T2A/cmr/m/n/14.4 ка на стра-ни-це (по-ме-
+ []
+
+
+Underfull \hbox (badness 2368) in paragraph at lines 355--356
+\T2A/cmr/m/n/14.4 мет-ка <<Review remark:
+ []
+
+
+Underfull \hbox (badness 1072) in paragraph at lines 355--356
+\T2A/cmr/m/n/14.4 NEUTRAL Note: Со-об-
+ []
+
+
+Underfull \hbox (badness 1609) in paragraph at lines 357--357
+[]|\T2A/cmr/m/n/14.4 Статья пе-рей-дет в со-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 357--357
+\T2A/cmr/m/n/14.4 сто-я-ние <<От-кло-не-на
+ []
+
+
+Underfull \hbox (badness 1558) in paragraph at lines 357--358
+\T2A/cmr/m/n/14.4 ка на стра-ни-це (по-ме-
+ []
+
+
+Underfull \hbox (badness 2368) in paragraph at lines 357--358
+\T2A/cmr/m/n/14.4 мет-ка <<Review remark:
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 359
+ []
+
+[17 <./reviewer.png>]) [18] [19] (./report.aux) ) 
 Here is how much of TeX's memory you used:
- 8916 strings out of 494440
- 124323 string characters out of 6173198
- 414962 words of memory out of 5000000
- 12005 multiletter control sequences out of 15000+600000
+ 8963 strings out of 494440
+ 124968 string characters out of 6173198
+ 373962 words of memory out of 5000000
+ 12049 multiletter control sequences out of 15000+600000
  21882 words of font info for 54 fonts, out of 8000000 for 9000
  430 hyphenation exceptions out of 8191
- 44i,6n,67p,983b,869s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf
-/fonts/enc/dvips/cm-super/cm-super-t2a.enc}</usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/cm-su
-per/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></u
-sr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts
-/type1/public/cm-super/sfit1200.pfb></usr/share/texmf/fonts/type1/public/cm-sup
-er/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></us
-r/share/texmf/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf/fonts/
-type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-supe
-r/sfrm2986.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1440.pfb></usr
-/share/texmf/fonts/type1/public/cm-super/sfti1728.pfb></usr/share/texmf/fonts/t
-ype1/public/cm-super/sftt1200.pfb></usr/share/texmf/fonts/type1/public/cm-super
-/sftt1440.pfb>
-Output written on report.pdf (15 pages, 1604690 bytes).
+ 44i,6n,67p,983b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dv
+ips/cm-super/cm-super-t2a.enc}</usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.
+pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texm
+f/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public
+/cm-super/sfit1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.p
+fb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf
+/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf/fonts/type1/public/
+cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2986.pf
+b></usr/share/texmf/fonts/type1/public/cm-super/sfti1440.pfb></usr/share/texmf/
+fonts/type1/public/cm-super/sfti1728.pfb></usr/share/texmf/fonts/type1/public/c
+m-super/sftt1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1440.pfb
+>
+Output written on report.pdf (20 pages, 1725239 bytes).
 PDF statistics:
- 9398 PDF objects out of 10688 (max. 8388607)
- 6009 compressed objects within 61 object streams
+ 9420 PDF objects out of 10688 (max. 8388607)
+ 6020 compressed objects within 61 object streams
  0 named destinations out of 1000 (max. 500000)
- 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 66 words of extra memory for PDF output out of 10000 (max. 10000000)
 
